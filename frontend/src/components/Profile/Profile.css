@@ -1,0 +1,86 @@
+/* Profile.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eef2f3; /* Light background color for contrast */
+  }
+  
+  .profile-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 50px auto; /* Added margin for spacing from top */
+    border: 1px solid #e4e4e4;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* White background for the profile card */
+    transition: transform 0.2s; /* Smooth hover effect */
+  }
+  
+  .profile-container:hover {
+    transform: scale(1.009); /* Slightly enlarge on hover */
+  }
+  
+  .profile-heading {
+    font-size: 28px; /* Increased heading size */
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333; /* Darker text color for contrast */
+    font-weight: bold;
+    text-align: center;
+  }
+  .profile-img{
+    width: 30%;
+    border-radius: 53px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+  .profile-detail {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #555; /* Softer color for the details */
+  }
+  
+  /* .profile-label {
+    font-weight: bold;
+    color: #007bff; 
+  } */
+  
+  .edit-button {
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #007bff; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px; /* Spacing above the button */
+    display: block; /* Center button */
+    width: 100%; /* Full width button */
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-1px); /* Lift effect on hover */
+  }
+  
+  @media (max-width: 600px) {
+    .profile-container {
+      padding: 15px; /* Adjust padding for smaller screens */
+    }
+  
+    .profile-heading {
+      font-size: 24px; /* Decrease heading size on smaller screens */
+    }
+  
+    .profile-detail {
+      font-size: 16px; /* Decrease detail size */
+    }
+  
+    .edit-button {
+      font-size: 14px; /* Smaller button text */
+    }
+  }
+  

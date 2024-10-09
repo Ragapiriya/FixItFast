@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcrypt");
 
 const userSchema = mongoose.Schema({
   userName: {
@@ -25,13 +26,13 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "user",
   },
-  phoneNo:{
-    type:Number,
-    required:[true,"Please enter phone number"]
+  phoneNo: {
+    type: Number,
+    required: [true, "Please enter phone number"],
   },
-  country:{
-    type:String,
-    default:"Sri Lanka"
+  country: {
+    type: String,
+    default: "Sri Lanka",
   },
   resetPasswordToken: String,
   resetPasswordTokenExpire: Date,
@@ -40,6 +41,15 @@ const userSchema = mongoose.Schema({
     default: Date.now,
   },
 });
-
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+userSchema.methods.isValidPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 const userModel = mongoose.model("User", userSchema);
 module.exports = userModel;

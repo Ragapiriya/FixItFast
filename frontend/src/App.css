@@ -7,6 +7,42 @@ body {
   padding: 0px;
   overflow-x: hidden;
 }
+.col-12 {
+  display: flex;
+  justify-content: center; /* Center the items horizontally */
+  align-items: center; /* Vertically center the items */
+  flex-wrap: wrap; /* Ensure it wraps on smaller screens */
+}
+
+ul {
+  display: flex;
+  justify-content: space-between; /* Spacing between items */
+  list-style-type: none; /* Remove default list bullets */
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-right: 20px; /* Add space between list items */
+  flex-grow: 1; /* Distribute equal space between buttons */
+}
+
+button {
+  padding: 10px 20px; /* Adjust padding for buttons */
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+}
+
+#login_btn {
+  background-color: #007bff; /* Different background for login button */
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+}
 
 /* Scroll Bar */
 
@@ -29,6 +65,7 @@ body {
 nav {
   background-color: #232f3e;
   padding: 1rem 1rem;
+  margin-bottom: 20px;
 }
 
 #search_btn {
