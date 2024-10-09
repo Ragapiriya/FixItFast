@@ -7,6 +7,7 @@ const reservationSchema = mongoose.Schema({
     required: true,
     ref: "User",
   },
+  booking_id: Number,
   serviceDetails: [
     {
       preferredDate: {
@@ -85,6 +86,6 @@ const reservationSchema = mongoose.Schema({
     required:true
   }
 });
-
+reservationSchema.plugin(AutoIncrement,{ inc_field: 'booking_id' });
 const reservationModel = mongoose.model("Reservation", reservationSchema);
 module.exports = reservationModel;
