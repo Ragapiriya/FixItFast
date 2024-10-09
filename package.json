@@ -4,7 +4,8 @@
   "description": "web application for vehicle service reservation",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon backend/server.js"
   },
   "author": "Ragapiriya",
   "license": "ISC",
@@ -16,5 +17,8 @@
     "mongoose-sequence": "^6.0.1",
     "path": "^0.12.7",
     "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
