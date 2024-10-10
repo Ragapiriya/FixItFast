@@ -7,6 +7,36 @@ body {
   padding: 0px;
   overflow-x: hidden;
 }
+.required {
+  color: red; /* Set the color of the asterisk to red */
+}
+.total-charges-table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.table-header {
+  display: table-row;
+  font-weight: bold;
+  background-color: #f0f0f0; 
+}
+.table-row{
+  display: table-row;
+}
+.header-item,
+.row-item {
+  display: table-cell;
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center; 
+}
+
+.table-row:nth-child(even) {
+  background-color: #f9f9f9; 
+}
+
 .col-12 {
   display: flex;
   justify-content: center; /* Center the items horizontally */
