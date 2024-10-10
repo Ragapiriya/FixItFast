@@ -1,6 +1,8 @@
 const express = require('express')
 const app= express();
-const errorMiddleware=require('./middlewares/error');
+const reservations = require('./routes/reservation');
+
+// const errorMiddleware=require('./middlewares/error');
 // const cookieParser = require('cookie-parser');
 
 
@@ -8,9 +10,8 @@ const errorMiddleware=require('./middlewares/error');
 app.use(express.json());
 // app.use(cookieParser());
 
-
 //routes
+app.use('/api/v1',reservations);
 
-
-app.use(errorMiddleware);
+// app.use(errorMiddleware);
 module.exports = app;

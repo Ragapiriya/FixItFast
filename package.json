@@ -4,8 +4,9 @@
   "description": "web application for vehicle service reservation",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon backend/server.js"
+    "start": "nodemon backend/server.js",
+    "dev": "set NODE_ENV=development && nodemon backend/server.js",
+    "prod": "set NODE_ENV=production && nodemon backend/server.js"
   },
   "author": "Ragapiriya",
   "license": "ISC",
