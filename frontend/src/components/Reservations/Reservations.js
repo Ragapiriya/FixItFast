@@ -217,7 +217,7 @@ const Reservations = () => {
       <MetaData title={"Reservations"} />
       <div className="reservations-container">
         <h2 className="reservations-title">Your Reservations</h2>
-        <img className="reservations-img" src="./images/reservations.png"/>
+        <img alt="Reservation-image" className="reservations-img" src="./images/reservations.png"/>
         <ul className="reservations-list">
           {sortedReservations.map((reservation) => {
             const reservationDateTime = new Date(

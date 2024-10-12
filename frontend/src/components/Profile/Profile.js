@@ -10,7 +10,7 @@ const Profile = () => {
     email: "johndoe@example.com",
     contactNumber: "+1234567890",
     district: "Central District",
-  });
+  }); 
 
   const handleEdit = () => {
     alert("Edit functionality not implemented yet!");
@@ -25,7 +25,7 @@ const Profile = () => {
         style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}
       >
         <h1 className="profile-heading">Profile</h1>
-        <img src="./images/profile.jpg" className="profile-img"/>
+        <img alt="userProfile" src="./images/profile.jpg" className="profile-img"/>
         <div className="profile-detail">
           <div style={{ marginBottom: "20px" }}>
             <strong>UserName:</strong> {user.userName}

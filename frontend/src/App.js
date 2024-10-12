@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Profile from "./components/Profile/Profile";
 import Reservations from "./components/Reservations/Reservations";
+import Authentication from "./components/Auth/Authentication";
 function App() {
   return (
     <Router>
@@ -14,10 +15,9 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile/>} />
-            <Route path="/reservations" element={<Reservations/>} />
-
-
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/reservations" element={<Reservations />} />
+            <Route path="/login" element={<Authentication />} />
           </Routes>
           <Footer />
         </HelmetProvider>

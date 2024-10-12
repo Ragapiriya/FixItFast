@@ -1,5 +1,5 @@
 const serviceTypeModel = require('../models/serviceTypeModel');
-const ErrorHandler = require('../utils/errorHandler');
+// const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncError = require("../middlewares/catchAsyncError");
 
 
