@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import Login from "../Auth/Login";
 // import { Fragment } from "react"
 export default function Header() {
-  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  // const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   return (
     <nav className="navbar row">
       {/* logo */}
@@ -11,7 +12,7 @@ export default function Header() {
         <div className="navbar-brand">
           <img alt="FixItFast Logo" width="150px" src="./images/logo.png" />
         </div>
-      </div>
+      </div> 
 
       <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
         <ul>
@@ -36,8 +37,8 @@ export default function Header() {
               </Link>
             </button>
           </li>
-
-          {isAuthenticated ? (
+              <Login/>
+          {/* {isAuthenticated ? (
             <>
               <li>
                 <button className="btn" id="login_btn" onClick={logout}>
@@ -62,10 +63,8 @@ export default function Header() {
                 Login{" "}
               </button>
             </li>
-          )}
-          {/* <button className="btn" id="login_btn">
-              Login or Loggout
-            </button> */}
+          )} */}
+         
         </ul>
       </div>
     </nav>
