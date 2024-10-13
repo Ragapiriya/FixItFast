@@ -150,7 +150,7 @@
 
 import React, { Fragment, useState } from "react";
 import "./Reservations.css";
-import MetaData from "../MetaData";
+import MetaData from "../MetaData" ;
 
 const Reservations = () => {
   // Sample reservation data

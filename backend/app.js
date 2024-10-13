@@ -7,11 +7,6 @@ const userModel = require("./models/userModel");
 const bodyParser = require('body-parser');
 const axios = require("axios");
 const { auth } = require("express-oauth2-jwt-bearer");
-// const unless = require("express-unless");
-// const jwt = require("express-jwt");
-// const jwks = require("jwks-rsa");
-// const errorMiddleware=require('./middlewares/error');
-// const cookieParser = require('cookie-parser');
 
 //middlewares
 app.use(express.json());
@@ -25,13 +20,6 @@ const jwtCheck = auth({
   tokenSigningAlg: "RS256",
 });
 
-// function checkIsAuthenticated (req,res,next){
-//     const username = req.auth.username;
-//     const reservationId = req.params.id;
-
-//     //?
-//     next();
-// }
 
 //routes
 app.use("/api/v1", reservations);

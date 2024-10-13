@@ -3,9 +3,10 @@ import "./Profile.css";
 import MetaData from "../MetaData";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import "./Profile.css";
 
 const Profile = () => {
-  const {  isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const [user, setUser] = useState({
     userName: "",
     name: "",
@@ -27,7 +28,6 @@ const Profile = () => {
           ...user,
           contactNumber,
           country,
-          
         });
         if (response.data.message === "First Time Login, user saved") {
           setIsFirstLogin(true);
@@ -57,12 +57,7 @@ const Profile = () => {
       setUser(JSON.parse(storedUserInfo));
     }
     checkFirstLogin();
-  }, [isAuthenticated, user]);
-
-
-
-
-
+  }, [isAuthenticated]);
 
   return (
     <Fragment>
@@ -99,9 +94,11 @@ const Profile = () => {
       </div>
       {showPopup && (
         <div>
-          <h1>Welcome, {user.name}</h1>
+          
           <div className="popup">
-            <h2>Complete Your Profile</h2>
+          <h3 style={{ textAlign: "center" }}>Welcome<br></br> {user.nickname}!</h3>
+            <h5 style={{ textAlign: "center" }}>Complete Your Profile</h5>
+            <br></br>
             <label>Contact Number</label>
             <input
               type="text"

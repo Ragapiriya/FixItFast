@@ -1,4 +1,4 @@
-/* Profile.css */
+
 
 body {
     font-family: 'Arial', sans-serif;
@@ -42,30 +42,7 @@ body {
     color: #555; /* Softer color for the details */
   }
   
-  /* .profile-label {
-    font-weight: bold;
-    color: #007bff; 
-  } */
-  
-  .edit-button {
-    padding: 12px 25px;
-    font-size: 16px;
-    background-color: #007bff; /* Primary button color */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: 20px; /* Spacing above the button */
-    display: block; /* Center button */
-    width: 100%; /* Full width button */
-  }
-  
-  .edit-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: translateY(-1px); /* Lift effect on hover */
-  }
-  
+ 
   @media (max-width: 600px) {
     .profile-container {
       padding: 15px; /* Adjust padding for smaller screens */
@@ -88,10 +65,13 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
+    background-color: rgb(131, 147, 185);
+    padding: 60px;
     border: 1px solid #ccc;
-    z-index: 1000;
+    border-radius: 15px;
+    width: 500px;
+
+
   }
   
   .popup input {
@@ -108,4 +88,9 @@ body {
     border: none;
     cursor: pointer;
   }
-  
+  .popup h3{
+    color: #000103;
+
+  }
+
+ 

@@ -1,19 +1,17 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const {
     loginWithRedirect,
     logout,
-    user,
     isAuthenticated,
     getAccessTokenSilently,
   } = useAuth0();
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
 
-  const [userInfo, setUserInfo] = useState(null);
   const fetchUserInfo = async () => {
     try {
       //getting access token in frontend.
@@ -29,10 +27,8 @@ export default function Login() {
         }
       );
       const userData = await response.data;
-      setUserInfo(userData);//error
       sessionStorage.setItem("userInfo", JSON.stringify(userData));
       console.log("Data extracted from endpoint",userData)
-      console.log("UserInfo state value",userInfo); //error
     } catch (error) {
       console.log("Error fetching user information", error);
     }
@@ -40,13 +36,14 @@ export default function Login() {
 
   const handleLogin = async () => {
     await loginWithRedirect();
-    navigate('/profile');
+    // navigate('/profile');
   }
   useEffect(() => {
     if (isAuthenticated) {
-      fetchUserInfo(); // fetching  user info once authenticated
+      fetchUserInfo(); // fetching  user info once authenticated 
     }
   }, [isAuthenticated]);
+
   return (
     <>
       {isAuthenticated ? (
