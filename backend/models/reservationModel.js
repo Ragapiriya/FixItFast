@@ -8,6 +8,10 @@ const reservationSchema = mongoose.Schema({
   //   required: true,
   //   ref: "User",
   // },
+  userName: {
+    type:String,
+    required:true
+  },
   booking_id: Number,
 
   preferredDate: {
@@ -15,10 +19,10 @@ const reservationSchema = mongoose.Schema({
     required: [true, "Please enter preferred date"],
   },
   preferredTime: {
-    type: Number,
+    type: String,
     required: [true, "Please enter preferred time"],
     enum: {
-      values: [10, 11, 12],
+      values: ["10AM", "11AM", "12PM"],
       message: "Please set correct time ",
     },
   },
@@ -34,7 +38,6 @@ const reservationSchema = mongoose.Schema({
   service: {
     type: String,
     required: [true, "Please select service"],
-    ref: "ServiceType",
     enum: {
       values: [
         "Air Conditioning Repair",
@@ -58,9 +61,7 @@ const reservationSchema = mongoose.Schema({
     },
   },
   charge: {
-    type: Number,
-    required: true,
-    ref: "ServiceType",
+    type: Number
   },
 
   message: {

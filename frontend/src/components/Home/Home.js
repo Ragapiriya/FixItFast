@@ -1,17 +1,19 @@
 import "./Home.css";
 
 import MetaData from "../MetaData";
-
+import axios from "axios";
 import React, { Fragment, useState } from "react";
+import {useAuth0} from "@auth0/auth0-react";
 const ReservationForm = () => {
+  const {user} = useAuth0();
   const [formData, setFormData] = useState({
     vehicleType: "",
-    registrationNumber: "",
+    vehicleRegistrationNo: "",
     currentMileage: "",
-    serviceDate: "",
+    preferredDate: "",
     preferredTime: "",
     preferredLocation: "",
-    serviceType: "",
+    service: "",
     additionalMessage: "",
   });
 
@@ -23,10 +25,23 @@ const ReservationForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data Submitted: ", formData);
     // You can handle the form submission logic here, like sending the data to an API
+
+    const reservationData = {
+      ...formData,
+      userName : user.nickname
+    }
+
+    try {
+      const res = await axios.post('http://localhost:8005/api/v1/reservation/new',reservationData);
+      console.log("Reservation submitted ",res);
+
+    } catch (error) {
+      console.log("Error while submitting the reservation ",error.message);
+    }
   };
 
   return (
@@ -59,8 +74,8 @@ const ReservationForm = () => {
             </label>
             <input
               type="text"
-              name="registrationNumber"
-              value={formData.registrationNumber}
+              name="vehicleRegistrationNo"
+              value={formData.vehicleRegistrationNo}
               onChange={handleChange}
               placeholder="Enter registration number"
             />
@@ -89,8 +104,8 @@ const ReservationForm = () => {
             </label>
             <input
               type="date"
-              name="serviceDate"
-              value={formData.serviceDate}
+              name="preferredDate"
+              value={formData.preferredDate}
               onChange={handleChange}
             />
           </div>
@@ -134,8 +149,8 @@ const ReservationForm = () => {
               Type of Service <span className="required">*</span>
             </label>
             <select
-              name="serviceType"
-              value={formData.serviceType}
+              name="service"
+              value={formData.service}
               onChange={handleChange}
             >
               <option value="">Select Type of Service</option>
@@ -186,7 +201,7 @@ const ReservationForm = () => {
             />
           </div>
         </section>
-        <section>
+        {/* <section>
           <h3>Total Charges</h3>
           <div className="total-charges-table">
             <div className="table-header">
@@ -211,7 +226,7 @@ const ReservationForm = () => {
               </div>{" "}
             </div>
           </div>
-        </section>
+        </section> */}
         <button type="submit">Confirm</button>
       </form>
     </Fragment>

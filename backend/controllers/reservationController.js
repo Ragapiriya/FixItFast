@@ -17,14 +17,49 @@ exports.getReservations = async (req,res,next) =>{
  ;
 };
 
-//create reservation - /api/v1/reservation/new
+//create reservation -POST- /api/v1/reservation/new
 exports.newReservation = async (req,res,next) =>{
-    // req.body.user = req.user.id;
-    const reservation = await reservationModel.create(req.body);
-    res.status(201).json({
-      success: true,
-      reservation: reservation,
+
+  try {
+    const {
+      vehicleType,
+      vehicleRegistrationNo,
+      currentMileage,
+      preferredDate,
+      preferredTime,
+      preferredLocation,
+      service,
+      additionalMessage,
+      userName
+    } = req.body;
+
+    const reservation = await reservationModel.create({
+      vehicleType,
+      vehicleRegistrationNo,
+      currentMileage,
+      preferredDate,
+      preferredTime,
+      preferredLocation,
+      service,
+      additionalMessage,
+      userName
     });
+
+    res.status(201).json({
+      success:true,
+      reservation
+    })
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:error.message
+    })
+  }
+    // const reservation = await reservationModel.create(req.body);
+    // res.status(201).json({
+    //   success: true,
+    //   reservation: reservation,
+    // });
 }
 
 //delete reservation - /api/v1/reservation/:id

@@ -1,7 +1,7 @@
 const cors = require("cors");
 const express = require("express");
 const app = express();
-const reservations = require("./routes/reservation");
+const reservation = require("./routes/reservation");
 const authorization = require("./routes/authorization");
 const userModel = require("./models/userModel");
 const bodyParser = require('body-parser');
@@ -22,34 +22,34 @@ const jwtCheck = auth({
 
 
 //routes
-app.use("/api/v1", reservations);
+app.use("/api/v1", reservation);
 // app.use("/api/v1", authorization);
 
-app.get("/", (req, res) => {
-  res.send("Hello from index route");
-});
-//checking the jwt token before sending responses.
-//only for authenticated user [has valid token]
-app.get("/protected", jwtCheck, async (req, res) => {
-  try {
-    const accessToken = req.headers.authorization.split(" ")[1];
-    const response = await axios.get(
-      "https://dev-qro8hjwxug8ea45c.us.auth0.com/userinfo",
-      {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    const userInfo = response.data;
-    console.log(userInfo);
-    res.send(userInfo);
+// app.get("/", (req, res) => {
+//   res.send("Hello from index route");
+// });
+// //checking the jwt token before sending responses.
+// //only for authenticated user [has valid token]
+// app.get("/protected", jwtCheck, async (req, res) => {
+//   try {
+//     const accessToken = req.headers.authorization.split(" ")[1];
+//     const response = await axios.get(
+//       "https://dev-qro8hjwxug8ea45c.us.auth0.com/userinfo",
+//       {
+//         headers: {
+//           authorization: `Bearer ${accessToken}`,
+//         },
+//       }
+//     );
+//     const userInfo = response.data;
+//     console.log(userInfo);
+//     res.send(userInfo);
 
-    // res.send(req.auth);
-  } catch (error) {
-    res.send(error.message);
-  }
-});
+//     // res.send(req.auth);
+//   } catch (error) {
+//     res.send(error.message);
+//   }
+// });
 
 app.post("/api/user", async (req, res) => {
   const { userName, email, name, contactNumber,country, picture } = req.body;
