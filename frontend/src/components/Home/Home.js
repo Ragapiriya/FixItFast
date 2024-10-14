@@ -1,4 +1,6 @@
 import "./Home.css";
+import { toast } from "react-toastify";
+
 
 import MetaData from "../MetaData";
 import axios from "axios";
@@ -6,7 +8,7 @@ import React, { Fragment, useState } from "react";
 import {useAuth0} from "@auth0/auth0-react";
 const ReservationForm = () => {
   const {user} = useAuth0();
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     vehicleType: "",
     vehicleRegistrationNo: "",
     currentMileage: "",
@@ -15,7 +17,8 @@ const ReservationForm = () => {
     preferredLocation: "",
     service: "",
     additionalMessage: "",
-  });
+  }
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,6 +41,13 @@ const ReservationForm = () => {
     try {
       const res = await axios.post('http://localhost:8005/api/v1/reservation/new',reservationData);
       console.log("Reservation submitted ",res);
+      setFormData(initialFormData);
+      toast.success('Created!',
+        {
+          position:"top-center"
+        }
+      );
+      console.log("Toast should appear now!"); 
 
     } catch (error) {
       console.log("Error while submitting the reservation ",error.message);
@@ -227,7 +237,7 @@ const ReservationForm = () => {
             </div>
           </div>
         </section> */}
-        <button type="submit">Confirm</button>
+        <button type="submit">Book reservation</button>
       </form>
     </Fragment>
   );

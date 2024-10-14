@@ -1,18 +1,15 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const autoIncrement =  require('mongoose-sequence')(mongoose);
+const autoIncrement = require("mongoose-sequence")(mongoose);
 
 const reservationSchema = mongoose.Schema({
-  // user: {
-  //   type: mongoose.Schema.ObjectId,
-  //   required: true,
-  //   ref: "User",
-  // },
   userName: {
-    type:String,
-    required:true
+    type: String,
+    required: true,
   },
-  booking_id: Number,
+  booking_id: {
+    type:Number
+  },
 
   preferredDate: {
     type: Date,
@@ -61,10 +58,10 @@ const reservationSchema = mongoose.Schema({
     },
   },
   charge: {
-    type: Number
+    type: Number,
   },
 
-  message: {
+  additionalMessage: {
     type: String,
     maxlength: [50, "Words capacity limited to 50 characters"],
   },
@@ -86,7 +83,8 @@ const reservationSchema = mongoose.Schema({
     type: Number,
     // required:true
   },
+  
 });
-reservationSchema.plugin(autoIncrement,{ inc_field: 'booking_id' });
+reservationSchema.plugin(autoIncrement, { inc_field: "booking_id" });
 const reservationModel = mongoose.model("Reservation", reservationSchema);
 module.exports = reservationModel;

@@ -3,7 +3,7 @@ const { getReservations, newReservation, deleteReservation } = require('../contr
 const router =express();
  
 
-router.route('/reservations').get(getReservations);
+router.route('/reservations/:userName').get(getReservations);
 router.route('/reservation/new').post(newReservation);
 router.route('/reservation/:id').delete(deleteReservation);
 

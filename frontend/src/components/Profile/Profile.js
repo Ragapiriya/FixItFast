@@ -70,7 +70,7 @@ const Profile = () => {
         <h1 className="profile-heading">Profile</h1>
         <img
           alt="userProfile"
-          src={user.picture || "./images/profile.jpg"}
+          src={user.picture}
           className="profile-img"
         />
         <div className="profile-detail">
