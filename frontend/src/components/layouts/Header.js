@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Login from "../Auth/Login";
+import './Header.css';
 export default function Header() {
   return (
     <nav className="navbar row">
@@ -11,12 +12,12 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
+      <div className="col-12 col-md-6 mt-4 mt-md-0 text-center">
         <ul>
           <li className="nav-item">
             <button className="btn">
               <Link to="/" className="nav-link">
-                Home
+                Home 
               </Link>
             </button>
           </li>

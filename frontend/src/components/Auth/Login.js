@@ -48,8 +48,8 @@ export default function Login() {
     <>
       {isAuthenticated ? (
         <>
-          <li>
-            <button className="btn" id="login_btn" onClick={logout}>
+          <li className="nav-item">
+            <button className="spc-btn" onClick={logout}>
               Logout
             </button>
           </li>
@@ -62,8 +62,8 @@ export default function Login() {
           </li>
         </>
       ) : (
-        <li>
-          <button className="btn" id="login_btn" onClick={handleLogin}>
+        <li className="nav-item">
+          <button className="spc-btn"  onClick={handleLogin}>
             Login{" "}
           </button>
         </li>

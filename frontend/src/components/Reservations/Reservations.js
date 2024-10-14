@@ -6,32 +6,34 @@ import axios from "axios";
 
 const Reservations = () => {
   const [reservations, setReservations] = useState([]);
-  const { user, isLoading, error } = useAuth0();
+  const { user, isLoading, error, isAuthenticated } = useAuth0();
   const currentDateTime = new Date();
 
   useEffect(() => {
-    if (isLoading) {
-      return <p>Loading User Data ...</p>;
-    }
-    if (error) {
-      return <p>Error Loading user data : {error.message}</p>;
-    }
-    if (!user) {
-      return <p>Please log in !!!</p>;
-    }
-    const fetchReservations = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8005/api/v1/reservations/${user.nickname}`
-        );
-        setReservations(res.data.reservations);
-      } catch (error) {
-        console.log("Error while fetching reservations ", error.message);
+    if (isAuthenticated) {
+      if (isLoading) {
+        return <p>Loading User Data ...</p>;
       }
-    };
+      if (error) {
+        return <p>Error Loading user data : {error.message}</p>;
+      }
+      if (!user) {
+        return <p>Please log in !!!</p>;
+      }
+      const fetchReservations = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:8005/api/v1/reservations/${user.nickname}`
+          );
+          setReservations(res.data.reservations);
+        } catch (error) {
+          console.log("Error while fetching reservations ", error.message);
+        }
+      };
 
-    fetchReservations();
-  }, [user.nickname]);
+      fetchReservations();
+    }
+  },[isAuthenticated]);
 
   const handleDelete = async (id) => {
     try {
@@ -91,58 +93,64 @@ const Reservations = () => {
           className="reservations-img"
           src="./images/reservations.png"
         />
-        <ul className="reservations-list">
-          {sortedReservations.length === 0 ? (
-            <h3 style={{textAlign:"center"}}>You have made no reservations yet</h3>
-          ) : (
-            sortedReservations.map((reservation) => {
-              const reservationDateTime = new Date(
-                `${reservation.preferredDate}`
-              );
-              const isUpcoming = reservationDateTime > currentDateTime; // Check if reservation is upcoming
+        {isAuthenticated ? (
+          <ul className="reservations-list">
+            {sortedReservations.length === 0 ? (
+              <h3 style={{ textAlign: "center" }}>
+                You have made no reservations yet
+              </h3>
+            ) : (
+              sortedReservations.map((reservation) => {
+                const reservationDateTime = new Date(
+                  `${reservation.preferredDate}`
+                );
+                const isUpcoming = reservationDateTime > currentDateTime; // Check if reservation is upcoming
 
-              return (
-                <li key={reservation.booking_id} className="reservation-item">
-                  <div className="reservation-details">
-                    <p className="reservation-id">
-                      Booking ID: {reservation.booking_id}
-                    </p>
-                    <p className="reservation-service">
-                      Service Type: {reservation.service}
-                    </p>
-                    <p className="reservation-date">
-                      Date: {reservation.preferredDate}
-                    </p>
-                    <p className="reservation-time">
-                      Time: {reservation.preferredTime}
-                    </p>
-                    <p className="reservation-location">
-                      Location: {reservation.preferredLocation}
-                    </p>
-                    {/* <p className="reservation-charges">
+                return (
+                  <li key={reservation.booking_id} className="reservation-item">
+                    <div className="reservation-details">
+                      <p className="reservation-id">
+                        Booking ID: {reservation.booking_id}
+                      </p>
+                      <p className="reservation-service">
+                        Service Type: {reservation.service}
+                      </p>
+                      <p className="reservation-date">
+                        Date: {reservation.preferredDate}
+                      </p>
+                      <p className="reservation-time">
+                        Time: {reservation.preferredTime}
+                      </p>
+                      <p className="reservation-location">
+                        Location: {reservation.preferredLocation}
+                      </p>
+                      {/* <p className="reservation-charges">
                     Total Charges: ${reservation.total_charges}
                   </p> */}
-                  </div>
-                  {isUpcoming ? (
-                    <button
-                      className="cancel-button"
-                      onClick={() => handleDelete(reservation._id)}
-                    >
-                      Cancel Reservation
-                    </button>
-                  ) : (
-                    <button
-                      className="remove-history-button"
-                      onClick={() => handleDelete(reservation._id)}
-                    >
-                      Remove History
-                    </button>
-                  )}
-                </li>
-              );
-            })
-          )}
-        </ul>
+                    </div>
+                    {isUpcoming ? (
+                      <button
+                        className="cancel-button"
+                        onClick={() => handleDelete(reservation._id)}
+                      >
+                        Cancel Reservation
+                      </button>
+                    ) : (
+                      <button
+                        className="remove-history-button"
+                        onClick={() => handleDelete(reservation._id)}
+                      >
+                        Remove History
+                      </button>
+                    )}
+                  </li>
+                );
+              })
+            )}
+          </ul>
+        ) : (
+          <h3 style={{textAlign:"center"}}>Log in to view your reservations</h3>
+        )}
       </div>
     </Fragment>
   );
