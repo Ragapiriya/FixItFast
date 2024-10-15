@@ -1,7 +1,7 @@
 const reservationModel = require("../models/reservationModel");
 // const ErrorHandler = require('../utils/errorHandler');
 // const catchAsyncError = require('../middlewares/catchAsyncError');
-
+const validator = require('validator');
 //get reservations by user - /api/v1/reservations/:userName
 exports.getReservations = async (req, res, next) => {
   try {
@@ -37,16 +37,21 @@ exports.newReservation = async (req, res, next) => {
       additionalMessage,
       userName,
     } = req.body;
+    let sanitizedMessage = validator.escape(additionalMessage);
+    let sanitizedVehicleRegistrationNo = validator.escape(
+      vehicleRegistrationNo
+    );
+    let sanitizedCurrentMileage = validator.escape(currentMileage);
 
     const reservation = await reservationModel.create({
       vehicleType,
-      vehicleRegistrationNo,
-      currentMileage,
+      vehicleRegistrationNo:sanitizedVehicleRegistrationNo,
+      currentMileage:sanitizedCurrentMileage,
       preferredDate,
       preferredTime,
       preferredLocation,
       service,
-      additionalMessage,
+      additionalMessage:sanitizedMessage,
       userName,
     });
 
@@ -96,7 +101,7 @@ exports.getAllreservations = async (req, res, next) => {
       .sort({ preferredDate: -1, preferredTime: -1 });
     res.status(200).json({
       success: true,
-      count:reservations.length,
+      count: reservations.length,
       reservations,
     });
   } catch (error) {
@@ -107,5 +112,3 @@ exports.getAllreservations = async (req, res, next) => {
     });
   }
 };
-
-

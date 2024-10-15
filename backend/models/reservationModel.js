@@ -63,7 +63,7 @@ const reservationSchema = mongoose.Schema({
 
   additionalMessage: {
     type: String,
-    maxlength: [50, "Words capacity limited to 50 characters"],
+    maxlength: [100, "Words capacity limited to 50 characters"],
   },
 
   vehicleType: {

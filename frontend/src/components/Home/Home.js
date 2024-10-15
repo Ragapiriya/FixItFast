@@ -1,13 +1,12 @@
 import "./Home.css";
 import { toast } from "react-toastify";
-
-
+import validator from "validator";
 import MetaData from "../MetaData";
 import axios from "axios";
 import React, { Fragment, useState } from "react";
-import {useAuth0} from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 const ReservationForm = () => {
-  const {user} = useAuth0();
+  const { user } = useAuth0();
   const initialFormData = {
     vehicleType: "",
     vehicleRegistrationNo: "",
@@ -17,7 +16,7 @@ const ReservationForm = () => {
     preferredLocation: "",
     service: "",
     additionalMessage: "",
-  }
+  };
   const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
@@ -30,27 +29,73 @@ const ReservationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted: ", formData);
-    // You can handle the form submission logic here, like sending the data to an API
+    let {
+      vehicleRegistrationNo,
+      currentMileage,
+      vehicleType,
+      service,
+      preferredLocation,
+      preferredTime,
+      preferredDate,
+      additionalMessage,
+    } = formData;
+    const errors = {};
+    if (!vehicleType) errors.vehicleType = "Please select a vehicle type";
+    if (!vehicleRegistrationNo)
+      errors.vehicleRegistrationNo =
+        "Please enter the vehicle registration number";
+    if (!currentMileage)
+      errors.currentMileage = "Please enter the current mileage";
+    if (!/^[A-Z0-9]{1,10}$/.test(vehicleRegistrationNo)) {
+      return toast.error("Invalid Vehicle Registration Number");
+    }
+    if (!/^\d+$/.test(currentMileage)) {
+      return toast.error("Current Mileage must be a valid number");
+    }
+    if (!preferredDate) errors.preferredDate = "Please select a preferred date";
+    if (new Date(preferredDate) < new Date()) {
+      return toast.error("Preferred date cannot be in the past");
+    }
+    if (!preferredTime) errors.preferredTime = "Please select a preferred time";
+    if (!preferredLocation)
+      errors.preferredLocation = "Please select a preferred location";
+    if (!service) errors.service = "Please select a service type";
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach((error) => {
+        toast.error(error, {
+          position: "top-center",
+        });
+      });
+      return; // Don't submit the form if there are validation errors
+    }
+    if (additionalMessage.length > 100) {
+      return toast.error("Message is too long");
+    }
+
+    console.log("Form Data accepted: ", formData);
+    // Sanitize inputs before submission
+  vehicleRegistrationNo = validator.escape(vehicleRegistrationNo);
+  additionalMessage = validator.escape(additionalMessage);
+  currentMileage = validator.escape(additionalMessage);
 
     const reservationData = {
       ...formData,
-      userName : user.nickname
-    }
+      userName: user.nickname,
+    };
 
     try {
-      const res = await axios.post('http://localhost:8005/api/v1/reservation/new',reservationData);
-      console.log("Reservation submitted ",res);
-      setFormData(initialFormData);
-      toast.success('Created!',
-        {
-          position:"top-center"
-        }
+      const res = await axios.post(
+        "http://localhost:8005/api/v1/reservation/new",
+        reservationData
       );
-      console.log("Toast should appear now!"); 
-
+      console.log("Reservation submitted to db", res);
+      setFormData(initialFormData);
+      toast.success("Created!", {
+        position: "top-center",
+      });
+      // console.log("Toast should appear now!");
     } catch (error) {
-      console.log("Error while submitting the reservation ",error.message);
+      console.log("Error while submitting the reservation ", error.message);
     }
   };
 
@@ -71,7 +116,6 @@ const ReservationForm = () => {
               value={formData.vehicleType}
               onChange={handleChange}
             >
-              <option value="">Select Vehicle Type</option>
               <option value="car">Car</option>
               <option value="van">Van</option>
               <option value="motorbike">Motorbike</option>
@@ -129,7 +173,6 @@ const ReservationForm = () => {
               value={formData.preferredTime}
               onChange={handleChange}
             >
-              <option value="">Select Preferred Time</option>
               <option value="10AM">10AM</option>
               <option value="11AM">11AM</option>
               <option value="12PM">12PM</option>
@@ -145,7 +188,6 @@ const ReservationForm = () => {
               value={formData.preferredLocation}
               onChange={handleChange}
             >
-              <option value="">Select Preferred Location</option>
               <option value="Puttalam">Puttalam</option>
               <option value="Kegalle">Kegalle</option>
               <option value="Kalutara">Kalutara</option>
@@ -163,7 +205,6 @@ const ReservationForm = () => {
               value={formData.service}
               onChange={handleChange}
             >
-              <option value="">Select Type of Service</option>
               <option value="Air Conditioning Repair">
                 Air Conditioning Repair
               </option>
@@ -211,32 +252,7 @@ const ReservationForm = () => {
             />
           </div>
         </section>
-        {/* <section>
-          <h3>Total Charges</h3>
-          <div className="total-charges-table">
-            <div className="table-header">
-              <div className="header-item">Details</div>
-              <div className="header-item">Amount [Rs.]</div>
-            </div>
-            <div className="table-row">
-              <div className="row-item">Service Charge</div>
-              <div className="row-item">1000</div>{" "}
-            </div>
-            <div className="table-row">
-              <div className="row-item">Tax</div>
-              <div className="row-item">200</div>{" "}
-            </div>
-            <div className="table-row">
-              <div className="row-item">
-                {" "}
-                <strong>Total Charges</strong>
-              </div>
-              <div className="row-item">
-                <strong>1200</strong>
-              </div>{" "}
-            </div>
-          </div>
-        </section> */}
+
         <button type="submit">Book reservation</button>
       </form>
     </Fragment>
