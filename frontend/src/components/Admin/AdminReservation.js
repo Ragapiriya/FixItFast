@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "./AdminReservation.css";
 import { useDispatch, useSelector } from "react-redux";
-// import Loader from "../layouts/Loader";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getAllreservations } from "../../actions/reservationsActions";
 import Loader from "../layouts/Loader";
@@ -30,7 +29,7 @@ const AdminReservations = () => {
     }
   }, [reservations]);
   return (
-    <Fragment>
+    <Fragment> 
       {loading ? (
         <Loader />
       ) : (
@@ -47,7 +46,7 @@ const AdminReservations = () => {
                 <th>User</th>
                 <th>Service</th>
                 <th>Message</th>
-                <th>VehRegNo</th>
+                <th>Veh_Reg_No</th>
                 <th>Mileage</th>
               </tr>
             </thead>

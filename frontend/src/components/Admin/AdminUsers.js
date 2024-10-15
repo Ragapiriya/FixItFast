@@ -1,30 +1,37 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-import './AdminUsers.css';
+import "./AdminUsers.css";
+import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
+import { getAllusers } from "../../actions/usersActions.js";
+import Loader from "../layouts/Loader";
+
 const AdminUsers = () => {
-  // const [users, setUsers] = useState([]);
+  const { isAuthenticated } = useAuth0();
+  const dispatch = useDispatch();
+  const { users, loading } = useSelector((state) => state.usersState);
 
-  // useEffect(() => {
-  //     // Fetch all users from the backend
-  //     axios.get('/api/users')
-  //         .then(response => setUsers(response.data))
-  //         .catch(error => console.error("Error fetching users: ", error));
-  // }, []);
-
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getAllusers);
+    }
+  }, [isAuthenticated, dispatch]);
   return (
-    <div className="admin-users-container">
-      <h2>All Registered Users</h2>
-      <table className="users-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Contact Number</th>
-            <th>Country</th>
-            <th>Registration Date</th>
-          </tr>
-        </thead>
-        {/* <tbody>
+    <Fragment>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="admin-users-container">
+          <h2>All Registered Users</h2>
+          <table className="users-table">
+            <thead>
+              <tr>
+                <th>UserName</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Created at</th>
+              </tr>
+            </thead>
+            {/* <tbody>
                     {users.map((user) => (
                         <tr key={user._id}>
                             <td>{user.name}</td>
@@ -35,17 +42,21 @@ const AdminUsers = () => {
                         </tr>
                     ))}
                 </tbody> */}
-        <tbody>
-          <tr>
-            <td>sample</td>
-            <td>sample</td>
-            <td>sample</td>
-            <td>sample</td>
-            <td>sample</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            <tbody>
+              {users && users.map((user)=>(
+
+              <tr key={user._id}>
+                <td>{user.userName}</td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.createdAt}</td>
+              </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </Fragment>
   );
 };
 
