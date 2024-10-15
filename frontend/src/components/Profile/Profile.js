@@ -21,42 +21,42 @@ const Profile = () => {
   const [country, setCountry] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
-  const checkFirstLogin = async () => {
-    if (isAuthenticated) {
-      try {
-        const response = await axios.post("http://localhost:3001/api/user", {
-          ...user,
-          contactNumber,
-          country,
-        });
-        if (response.data.message === "First Time Login, user saved") {
-          setIsFirstLogin(true);
-          setShowPopup(true);
-        }
-      } catch (error) {
-        console.error("Error checking user status:", error);
-      }
-    }
-  };
-  const handleSave = async () => {
-    try {
-      await axios.put("http://localhost:3001/api/user", {
-        contactNumber,
-        country,
-      });
+  // const checkFirstLogin = async () => {
+  //   if (isAuthenticated) {
+  //     try {
+  //       const response = await axios.post("http://localhost:3001/api/user", {
+  //         ...user,
+  //         contactNumber,
+  //         country,
+  //       });
+  //       if (response.data.message === "First Time Login, user saved") {
+  //         setIsFirstLogin(true);
+  //         setShowPopup(true);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error checking user status:", error);
+  //     }
+  //   }
+  // };
+  // const handleSave = async () => {
+  //   try {
+  //     await axios.put("http://localhost:3001/api/user", {
+  //       contactNumber,
+  //       country,
+  //     });
 
-      setShowPopup(false);
-    } catch (error) {
-      console.log("Error saving user data", error);
-    }
-  };
+  //     setShowPopup(false);
+  //   } catch (error) {
+  //     console.log("Error saving user data", error);
+  //   }
+  // };
 
   useEffect(() => {
     const storedUserInfo = sessionStorage.getItem("userInfo");
     if (storedUserInfo) {
       setUser(JSON.parse(storedUserInfo));
     }
-    checkFirstLogin();
+    // checkFirstLogin();
   }, [isAuthenticated]);
 
   return (
@@ -92,7 +92,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      {showPopup && (
+      {/* {showPopup && (
         <div>
           
           <div className="popup">
@@ -114,7 +114,7 @@ const Profile = () => {
             <button onClick={handleSave}>Save</button>
           </div>
         </div>
-      )}
+      )} */}
     </Fragment>
   );
 };

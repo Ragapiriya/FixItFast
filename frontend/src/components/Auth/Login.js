@@ -17,7 +17,7 @@ export default function Login() {
       //getting access token in frontend.
       const accessToken = await getAccessTokenSilently();
       //API call to end point to get user information
-      console.log(accessToken)
+      // console.log(accessToken)
       const response = await axios.get(
         "https://dev-qro8hjwxug8ea45c.us.auth0.com/userinfo",
         {
@@ -28,7 +28,6 @@ export default function Login() {
       );
       const userData = await response.data;
       sessionStorage.setItem("userInfo", JSON.stringify(userData));
-      console.log("Data extracted from endpoint",userData)
     } catch (error) {
       console.log("Error fetching user information", error);
     }

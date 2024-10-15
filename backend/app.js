@@ -2,10 +2,9 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 const reservation = require("./routes/reservation");
-const authorization = require("./routes/authorization");
+const user = require("./routes/users");
 const userModel = require("./models/userModel");
 const bodyParser = require('body-parser');
-const axios = require("axios");
 const { auth } = require("express-oauth2-jwt-bearer");
 
 //middlewares
@@ -23,11 +22,14 @@ const jwtCheck = auth({
 
 //routes
 app.use("/api/v1", reservation);
-// app.use("/api/v1", authorization);
+app.use("/api/v1", user);
+
 
 // app.get("/", (req, res) => {
 //   res.send("Hello from index route");
 // });
+
+
 // //checking the jwt token before sending responses.
 // //only for authenticated user [has valid token]
 // app.get("/protected", jwtCheck, async (req, res) => {
@@ -51,52 +53,52 @@ app.use("/api/v1", reservation);
 //   }
 // });
 
-app.post("/api/user", async (req, res) => {
-  const { userName, email, name, contactNumber,country, picture } = req.body;
-  let user = await userModel.findOne({ userName });
-  if (user && !contactNumber) {
-    //user exists [not new user]
-    return res.status(200).json({
-      message: "User exits",
-    });
-  }
-  //user doesn't exist
-  user = new userModel({
-    userName,
-    email,
-    name,
-    contactNumber,
-    country,
-    picture,
-  });
-  await user.save();
-  res.status(201).json({
-    message: "First Time Login, user saved",
-  });
-});
+// app.post("/api/user", async (req, res) => {
+//   const { userName, email, name, contactNumber,country, picture } = req.body;
+//   let user = await userModel.findOne({ userName });
+//   if (user && !contactNumber) {
+//     //user exists [not new user]
+//     return res.status(200).json({
+//       message: "User exits",
+//     });
+//   }
+//   //user doesn't exist
+//   user = new userModel({
+//     userName,
+//     email,
+//     name,
+//     contactNumber,
+//     country,
+//     picture,
+//   });
+//   await user.save();
+//   res.status(201).json({
+//     message: "First Time Login, user saved",
+//   });
+// });
 
-app.put("/api/user", async (req, res) => {
-  const { userName, email, name, contactNumber,country, picture } = req.body;
-  userModel.findByOne
-  let user = await userModel.findOne({ userName });
-  let userId = user._id;
-  user = await userModel.findByIdAndUpdate(userId,req.body,{
-    new:true
-  })
-  if (user && !contactNumber) {
-    //user exists [not new user]
-    return res.status(200).json({
-      message: "User exits",
-    });
-  }
-  //user doesn't exist
+// app.put("/api/user", async (req, res) => {
+//   const { userName, email, name, contactNumber,country, picture } = req.body;
+//   userModel.findByOne
+//   let user = await userModel.findOne({ userName });
+//   let userId = user._id;
+//   user = await userModel.findByIdAndUpdate(userId,req.body,{
+//     new:true
+//   })
+//   if (user && !contactNumber) {
+//     //user exists [not new user]
+//     return res.status(200).json({
+//       message: "User exits",
+//     });
+//   }
+//   //user doesn't exist
   
-  await user.save();
-  res.status(201).json({
-    message: "User data updated",
-    user
-  });
-});
+//   await user.save();
+//   res.status(201).json({
+//     message: "User data updated",
+//     user
+//   });
+// });
 
 
 

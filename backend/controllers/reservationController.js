@@ -30,7 +30,7 @@ exports.newReservation = async (req, res, next) => {
       vehicleType,
       vehicleRegistrationNo,
       currentMileage,
-      preferredDate, 
+      preferredDate,
       preferredTime,
       preferredLocation,
       service,
@@ -65,7 +65,6 @@ exports.newReservation = async (req, res, next) => {
 //delete reservation - /api/v1/reservation/:id
 exports.deleteReservation = async (req, res, next) => {
   try {
-
     const id = req.params.id;
     const reservation = await reservationModel.findByIdAndDelete(id);
     if (!reservation) {
@@ -82,8 +81,31 @@ exports.deleteReservation = async (req, res, next) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message:"Failed to delete reservation.",
-      error:error.message
+      message: "Failed to delete reservation.",
+      error: error.message,
     });
   }
 };
+
+//ADMIN
+//get all reservations details - /api/v1/admin/reservations
+exports.getAllreservations = async (req, res, next) => {
+  try {
+    const reservations = await reservationModel
+      .find()
+      .sort({ preferredDate: -1, preferredTime: -1 });
+    res.status(200).json({
+      success: true,
+      count:reservations.length,
+      reservations,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch the reservations",
+      error: error.message,
+    });
+  }
+};
+
+

@@ -9,6 +9,7 @@ import Reservations from "./components/Reservations/Reservations";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./customToast.css"; //
+import AdminDashboard from "./components/Admin/AdminDashboard";
 // import Authentication from "./components/Auth/Authentication";
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/reservations" element={<Reservations />} />
             {/* <Route path="/login" element={<Authentication />} /> */}
+            {/* <Route path="/admin" element={<AdminReservations/>} />
+             */}
+             <Route path="/admin" element={<AdminDashboard/>}/>
           </Routes>
           <Footer />
         </HelmetProvider>
