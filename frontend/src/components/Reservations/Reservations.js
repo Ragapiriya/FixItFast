@@ -2,11 +2,10 @@ import React, { Fragment, useEffect, useState } from "react";
 import "./Reservations.css";
 import MetaData from "../MetaData";
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getReservations } from "../../actions/reservationsActions";
 import Loader from "../layouts/Loader";
-
+ 
 const Reservations = () => {
   // const [reservations, setReservations] = useState([]);
   const { user, isLoading, error, isAuthenticated } = useAuth0();

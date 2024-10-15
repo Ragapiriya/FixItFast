@@ -1,60 +1,79 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-import './AdminReservation.css';
+import React, { Fragment, useEffect, useState } from "react";
+import "./AdminReservation.css";
+import { useDispatch, useSelector } from "react-redux";
+// import Loader from "../layouts/Loader";
+import { useAuth0 } from "@auth0/auth0-react";
+import { getAllreservations } from "../../actions/reservationsActions";
+import Loader from "../layouts/Loader";
+
 const AdminReservations = () => {
-//   const [reservations, setReservations] = useState([]);
-//   const [upcomingCount, setUpcomingCount] = useState(0);
+  const { isAuthenticated } = useAuth0();
+  const currentDateTime = new Date();
+  const [upcomingResCount, setupcomingResCount] = useState(0);
+  const dispatch = useDispatch();
+  const { reservations, loading } = useSelector(
+    (state) => state.reservationsState
+  );
 
-  //   useEffect(() => {
-  //     axios
-  //       .get("/api/reservations")
-  //       .then((response) => {
-  //         setReservations(response.data);
-  //         const upcoming = response.data.filter(
-  //           (res) => new Date(res.date) > new Date()
-  //         );
-  //         setUpcomingCount(upcoming.length);
-  //       })
-  //       .catch((error) => console.error("Error fetching reservations: ", error));
-  //   }, []);
-
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getAllreservations);
+    }
+  }, [isAuthenticated, dispatch]);
+  useEffect(() => {
+    if (reservations && reservations.length > 0) {
+      const count = reservations.filter((reservation) => {
+        const reservationDateTime = new Date(reservation.preferredDate);
+        return reservationDateTime > currentDateTime;
+      }).length;
+      setupcomingResCount(count);
+    }
+  }, [reservations]);
   return (
-    <div className="admin-reservations-container">
-      {/* <h2>Total Upcoming Reservations: {upcomingCount}</h2> */}
-      <h2>Total Upcoming Reservations: 10</h2>
+    <Fragment>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="admin-reservations-container">
+          <h2>Total Upcoming Reservations: {upcomingResCount}</h2>
 
-      <table className="reservations-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>User</th>
-            <th>Service</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        {/* <tbody>
-          {reservations.map((res) => (
-            <tr key={res._id}>
-              <td>{res.date}</td>
-              <td>{res.time}</td>
-              <td>{res.user}</td>
-              <td>{res.serviceType}</td>
-              <td>{res.status}</td>
-            </tr>
-          ))}
-        </tbody> */}
-        <tbody>
-          <tr>
-            <td>Sample</td>
-            <td>Sample</td>
-            <td>Sample</td>
-            <td>Sample</td>
-            <td>Sample</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+          <table className="reservations-table">
+            <thead>
+              <tr>
+                <th>Booking id</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>District</th>
+                <th>User</th>
+                <th>Service</th>
+                <th>Message</th>
+                <th>VehRegNo</th>
+                <th>Mileage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reservations &&
+                reservations
+                  .slice() // To avoid mutating the original state
+                  .sort((a, b) => a.booking_id - b.booking_id)
+                  .map((reservation) => (
+                    <tr key={reservation.booking_id}>
+                      <td>{reservation.booking_id}</td>
+                      <td>{reservation.preferredDate}</td>
+                      <td>{reservation.preferredTime}</td>
+                      <td>{reservation.preferredLocation}</td>
+                      <td>{reservation.userName}</td>
+                      <td>{reservation.service}</td>
+                      <td>{reservation.additionalMessage}</td>
+                      <td>{reservation.vehicleRegistrationNo}</td>
+                      <td>{reservation.currentMileage}</td>
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </Fragment>
   );
 };
 
