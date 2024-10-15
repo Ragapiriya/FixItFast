@@ -79,10 +79,7 @@ const reservationSchema = mongoose.Schema({
     default: 0,
   },
 
-  totalCharge: {
-    type: Number,
-    // required:true
-  },
+  checksum: { type: String, required: true },
   
 });
 reservationSchema.plugin(autoIncrement, { inc_field: "booking_id" });

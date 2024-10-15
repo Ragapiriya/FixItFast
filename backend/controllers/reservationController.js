@@ -1,7 +1,8 @@
 const reservationModel = require("../models/reservationModel");
 // const ErrorHandler = require('../utils/errorHandler');
 // const catchAsyncError = require('../middlewares/catchAsyncError');
-const validator = require('validator');
+const validator = require("validator");
+const { generateChecksum } = require("../utils/checkSum");
 //get reservations by user - /api/v1/reservations/:userName
 exports.getReservations = async (req, res, next) => {
   try {
@@ -42,17 +43,21 @@ exports.newReservation = async (req, res, next) => {
       vehicleRegistrationNo
     );
     let sanitizedCurrentMileage = validator.escape(currentMileage);
-
-    const reservation = await reservationModel.create({
+    const newReservation = {
       vehicleType,
-      vehicleRegistrationNo:sanitizedVehicleRegistrationNo,
-      currentMileage:sanitizedCurrentMileage,
+      vehicleRegistrationNo: sanitizedVehicleRegistrationNo,
+      currentMileage: sanitizedCurrentMileage,
       preferredDate,
       preferredTime,
       preferredLocation,
       service,
-      additionalMessage:sanitizedMessage,
+      additionalMessage: sanitizedMessage,
       userName,
+    };
+    const checksum = generateChecksum(newReservation);
+    const reservation = await reservationModel.create({
+      ...newReservation,
+      checksum,
     });
 
     res.status(201).json({
@@ -94,11 +99,48 @@ exports.deleteReservation = async (req, res, next) => {
 
 //ADMIN
 //get all reservations details - /api/v1/admin/reservations
+// exports.getAllreservations = async (req, res, next) => {
+//   try {
+//     const reservations = await reservationModel
+//       .find()
+//       .sort({ preferredDate: -1, preferredTime: -1 });
+//     res.status(200).json({
+//       success: true,
+//       count: reservations.length,
+//       reservations,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: "Failed to fetch the reservations",
+//       error: error.message,
+//     });
+//   }
+// };
+
+//ADMIN
+//get all reservations details - /api/v1/admin/reservations
 exports.getAllreservations = async (req, res, next) => {
   try {
     const reservations = await reservationModel
       .find()
       .sort({ preferredDate: -1, preferredTime: -1 });
+
+    // Verify checksums for each reservation
+    const invalidReservations = [];
+    for (const reservation of reservations) {
+      const currentChecksum = generateChecksum(reservation.toObject()); 
+      if (currentChecksum !== reservation.checksum) {
+        invalidReservations.push(reservation._id); 
+      }
+    }
+
+    if (invalidReservations.length > 0) {
+     
+      console.warn('Data integrity violations found for reservations:', invalidReservations);
+      
+    }
+
     res.status(200).json({
       success: true,
       count: reservations.length,
