@@ -15,20 +15,19 @@ exports.createNewUser = async (req, res, next) => {
         picture,
       });
       res.status(201).json({
-        success:true,
-        message:"User created successfully"
-      })
-    }
-    else{
+        success: true,
+        message: "User created successfully",
+      });
+    } else {
       res.status(200).json({
-        message:"User already exists"
-      })
+        message: "User already exists",
+      });
     }
   } catch (error) {
     res.status(500).json({
-      success:false,
-      message:error.message
-    })
+      success: false,
+      message: error.message,
+    });
   }
 };
 

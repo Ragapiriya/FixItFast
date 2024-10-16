@@ -9,58 +9,17 @@ export default function Login() {
     loginWithRedirect,
     logout,
     isAuthenticated,
-    getAccessTokenSilently,
   } = useAuth0();
   // let navigate = useNavigate();
-
+  const userData = JSON.stringify(user);
   const handleLogin = async () => {
     await loginWithRedirect();
   };
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        //getting access token in frontend.
-        const accessToken = await getAccessTokenSilently();
-        //API call to end point to get user information
-        // console.log(accessToken)
-        const response = await axios.get(
-          "https://dev-qro8hjwxug8ea45c.us.auth0.com/userinfo",
-          {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        const userData = await response.data;
-        console.log("USerDATa", userData);
-        sessionStorage.setItem("userInfo", JSON.stringify(userData));
-      } catch (error) {
-        console.log("Error fetching user information", error);
-      }
-    };
     if (isAuthenticated) {
-      const fetchUserInfo = async () => {
-        try {
-          //getting access token in frontend.
-          const accessToken = await getAccessTokenSilently();
-          //API call to end point to get user information
-          // console.log(accessToken)
-          const response = await axios.get(
-            "https://dev-qro8hjwxug8ea45c.us.auth0.com/userinfo",
-            {
-              headers: {
-                authorization: `Bearer ${accessToken}`,
-              },
-            }
-          );
-          const userData = await response.data;
-          console.log("USerDATa", userData);
-          sessionStorage.setItem("userInfo", JSON.stringify(userData));
-        } catch (error) {
-          console.log("Error fetching user information", error);
-        }
-      };
-      fetchUserInfo(); // fetching  user info once authenticated
+      sessionStorage.setItem("userInfo",userData);
+      const storedUserInfo = sessionStorage.getItem("userInfo");
+      console.log("Stored ",storedUserInfo)
       axios
         .post("/api/v1/user/new", {
           userName: user.nickname,
@@ -69,11 +28,12 @@ export default function Login() {
           email: user.email,
         })
         .then((response) => {
-          console.log("UserSaved", response.data);
-        })
+          console.log("User Saved ", response.data);
+        }) 
         .catch((error) => {
           console.log("Error saving user", error);
         });
+
     }
   }, [isAuthenticated, user]);
 

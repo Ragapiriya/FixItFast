@@ -11,15 +11,14 @@ const Profile = () => {
     userName: "",
     name: "",
     email: "",
-    contactNumber: "",
     country: "",
     picture: "",
   });
-
-  const [isFirstLogin, setIsFirstLogin] = useState(false);
-  const [contactNumber, setContactNumber] = useState("");
-  const [country, setCountry] = useState("");
-  const [showPopup, setShowPopup] = useState(false);
+console.log(user)
+  // const [isFirstLogin, setIsFirstLogin] = useState(false);
+  // const [contactNumber, setContactNumber] = useState("");
+  // const [country, setCountry] = useState("");
+  // const [showPopup, setShowPopup] = useState(false);
 
   // const checkFirstLogin = async () => {
   //   if (isAuthenticated) {
@@ -61,7 +60,7 @@ const Profile = () => {
 
   return (
     <Fragment>
-      <MetaData title={user.name || Profile} />
+      <MetaData title={user.nickname || Profile} />
 
       <div
         className="profile-container"
@@ -73,22 +72,22 @@ const Profile = () => {
           src={user.picture}
           className="profile-img"
         />
-        <div className="profile-detail">
-          <div style={{ marginBottom: "20px" }}>
+        <div className="profile-detail" style={{ marginTop:"20px"}}>
+          <div style={{ marginBottom: "20px",textAlign:"center" }}>
             <strong>UserName:</strong>{" "}
             {user.nickname || user.email.split("@")[0]}
           </div>
-          <div style={{ marginBottom: "20px" }}>
+          <div style={{ marginBottom: "20px",textAlign:"center" }}>
             <strong>Name:</strong> {user.name}
           </div>
-          <div style={{ marginBottom: "20px" }}>
+          <div style={{ marginBottom: "20px",textAlign:"center" }}>
             <strong>Email:</strong> {user.email}
           </div>
-          <div style={{ marginBottom: "20px" }}>
-            <strong>Contact Number:</strong> {user.contactNumber || "N/A"}
-          </div>
-          <div style={{ marginBottom: "20px" }}>
-            <strong>District:</strong> {user.district || "N/A"}
+          {/* <div style={{ marginBottom: "20px" }}>
+            <strong>Contact Number:</strong> {user.contactNumber}
+          </div> */}
+          <div style={{ marginBottom: "20px",textAlign:"center" }}>
+            <strong>Country:</strong> Sri Lanka
           </div>
         </div>
       </div>
