@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function Login() {
   const {
+    user,
     loginWithRedirect,
     logout,
     isAuthenticated,
@@ -12,36 +13,69 @@ export default function Login() {
   } = useAuth0();
   // let navigate = useNavigate();
 
-  const fetchUserInfo = async () => {
-    try {
-      //getting access token in frontend.
-      const accessToken = await getAccessTokenSilently();
-      //API call to end point to get user information
-      // console.log(accessToken)
-      const response = await axios.get(
-        "https://dev-qro8hjwxug8ea45c.us.auth0.com/userinfo",
-        {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      const userData = await response.data;
-      sessionStorage.setItem("userInfo", JSON.stringify(userData));
-    } catch (error) {
-      console.log("Error fetching user information", error);
-    }
-  };
-
   const handleLogin = async () => {
     await loginWithRedirect();
-    // navigate('/profile');
-  }
+  };
   useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        //getting access token in frontend.
+        const accessToken = await getAccessTokenSilently();
+        //API call to end point to get user information
+        // console.log(accessToken)
+        const response = await axios.get(
+          "https://dev-qro8hjwxug8ea45c.us.auth0.com/userinfo",
+          {
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        const userData = await response.data;
+        console.log("USerDATa", userData);
+        sessionStorage.setItem("userInfo", JSON.stringify(userData));
+      } catch (error) {
+        console.log("Error fetching user information", error);
+      }
+    };
     if (isAuthenticated) {
-      fetchUserInfo(); // fetching  user info once authenticated 
+      const fetchUserInfo = async () => {
+        try {
+          //getting access token in frontend.
+          const accessToken = await getAccessTokenSilently();
+          //API call to end point to get user information
+          // console.log(accessToken)
+          const response = await axios.get(
+            "https://dev-qro8hjwxug8ea45c.us.auth0.com/userinfo",
+            {
+              headers: {
+                authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          const userData = await response.data;
+          console.log("USerDATa", userData);
+          sessionStorage.setItem("userInfo", JSON.stringify(userData));
+        } catch (error) {
+          console.log("Error fetching user information", error);
+        }
+      };
+      fetchUserInfo(); // fetching  user info once authenticated
+      axios
+        .post("/api/v1/user/new", {
+          userName: user.nickname,
+          name: user.name,
+          picture: user.picture,
+          email: user.email,
+        })
+        .then((response) => {
+          console.log("UserSaved", response.data);
+        })
+        .catch((error) => {
+          console.log("Error saving user", error);
+        });
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, user]);
 
   return (
     <>
@@ -53,7 +87,7 @@ export default function Login() {
             </button>
           </li>
           <li className="nav-item">
-            <button className="btn" >
+            <button className="btn">
               <Link to="/profile" className="nav-link">
                 Profile
               </Link>
@@ -62,7 +96,7 @@ export default function Login() {
         </>
       ) : (
         <li className="nav-item">
-          <button className="spc-btn"  onClick={handleLogin}>
+          <button className="spc-btn" onClick={handleLogin}>
             Login{" "}
           </button>
         </li>

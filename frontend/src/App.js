@@ -23,9 +23,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/reservations" element={<Reservations />} />
             {/* <Route path="/login" element={<Authentication />} /> */}
-            {/* <Route path="/admin" element={<AdminReservations/>} />
-             */}
-             <Route path="/admin" element={<AdminDashboard/>}/>
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
           <Footer />
         </HelmetProvider>

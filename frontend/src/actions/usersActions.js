@@ -10,3 +10,7 @@ export const getAllusers = async (dispatch) => {
     dispatch(usersFail(error.response.data.message));
   }
 };
+
+export const createNewUser = async(dispatch) =>{
+  dispatch(user)
+}

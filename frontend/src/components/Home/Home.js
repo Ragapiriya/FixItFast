@@ -6,7 +6,7 @@ import axios from "axios";
 import React, { Fragment, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 const ReservationForm = () => {
-  const { user } = useAuth0();
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const initialFormData = {
     vehicleType: "",
     vehicleRegistrationNo: "",
@@ -28,74 +28,81 @@ const ReservationForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    let {
-      vehicleRegistrationNo,
-      currentMileage,
-      vehicleType,
-      service,
-      preferredLocation,
-      preferredTime,
-      preferredDate,
-      additionalMessage,
-    } = formData;
-    const errors = {};
-    if (!vehicleType) errors.vehicleType = "Please select a vehicle type";
-    if (!vehicleRegistrationNo)
-      errors.vehicleRegistrationNo =
-        "Please enter the vehicle registration number";
-    if (!currentMileage)
-      errors.currentMileage = "Please enter the current mileage";
-    if (!/^[A-Z0-9]{1,10}$/.test(vehicleRegistrationNo)) {
-      return toast.error("Invalid Vehicle Registration Number");
-    }
-    if (!/^\d+$/.test(currentMileage)) {
-      return toast.error("Current Mileage must be a valid number");
-    }
-    if (!preferredDate) errors.preferredDate = "Please select a preferred date";
-    if (new Date(preferredDate) < new Date()) {
-      return toast.error("Preferred date cannot be in the past");
-    }
-    if (!preferredTime) errors.preferredTime = "Please select a preferred time";
-    if (!preferredLocation)
-      errors.preferredLocation = "Please select a preferred location";
-    if (!service) errors.service = "Please select a service type";
-    if (Object.keys(errors).length > 0) {
-      Object.values(errors).forEach((error) => {
-        toast.error(error, {
+    if (isAuthenticated) {
+      e.preventDefault();
+      let {
+        vehicleRegistrationNo,
+        currentMileage,
+        vehicleType,
+        service,
+        preferredLocation,
+        preferredTime,
+        preferredDate,
+        additionalMessage,
+      } = formData;
+      const errors = {};
+      if (!vehicleType) errors.vehicleType = "Please select a vehicle type";
+      if (!vehicleRegistrationNo)
+        errors.vehicleRegistrationNo =
+          "Please enter the vehicle registration number";
+      if (!currentMileage)
+        errors.currentMileage = "Please enter the current mileage";
+      if (!/^[A-Z0-9]{1,10}$/.test(vehicleRegistrationNo)) {
+        return toast.error("Invalid Vehicle Registration Number");
+      }
+      if (!/^\d+$/.test(currentMileage)) {
+        return toast.error("Current Mileage must be a valid number");
+      }
+      if (!preferredDate)
+        errors.preferredDate = "Please select a preferred date";
+      if (new Date(preferredDate) < new Date()) {
+        return toast.error("Preferred date cannot be in the past");
+      }
+      if (!preferredTime)
+        errors.preferredTime = "Please select a preferred time";
+      if (!preferredLocation)
+        errors.preferredLocation = "Please select a preferred location";
+      if (!service) errors.service = "Please select a service type";
+      if (Object.keys(errors).length > 0) {
+        Object.values(errors).forEach((error) => {
+          toast.error(error, {
+            position: "top-center",
+          });
+        });
+        return; // Don't submit the form if there are validation errors
+      }
+      if (additionalMessage.length > 100) {
+        return toast.error("Message is too long");
+      }
+
+      console.log("Form Data accepted: ", formData);
+      // Sanitize inputs before submission
+      vehicleRegistrationNo = validator.escape(vehicleRegistrationNo);
+      additionalMessage = validator.escape(additionalMessage);
+      currentMileage = validator.escape(additionalMessage);
+
+      const reservationData = {
+        ...formData,
+        userName: user.nickname,
+      };
+
+      try {
+        const res = await axios.post(
+          "http://localhost:8005/api/v1/reservation/new",
+          reservationData
+        );
+        console.log("Reservation submitted to db", res);
+        setFormData(initialFormData);
+        toast.success("Created!", {
           position: "top-center",
         });
-      });
-      return; // Don't submit the form if there are validation errors
-    }
-    if (additionalMessage.length > 100) {
-      return toast.error("Message is too long");
-    }
-
-    console.log("Form Data accepted: ", formData);
-    // Sanitize inputs before submission
-  vehicleRegistrationNo = validator.escape(vehicleRegistrationNo);
-  additionalMessage = validator.escape(additionalMessage);
-  currentMileage = validator.escape(additionalMessage);
-
-    const reservationData = {
-      ...formData,
-      userName: user.nickname,
-    };
-
-    try {
-      const res = await axios.post(
-        "http://localhost:8005/api/v1/reservation/new",
-        reservationData
-      );
-      console.log("Reservation submitted to db", res);
-      setFormData(initialFormData);
-      toast.success("Created!", {
-        position: "top-center",
-      });
-      // console.log("Toast should appear now!");
-    } catch (error) {
-      console.log("Error while submitting the reservation ", error.message);
+        // console.log("Toast should appear now!");
+      } catch (error) {
+        console.log("Error while submitting the reservation ", error.message);
+      }
+    } else {
+      toast.error("Login first!!");
+      loginWithRedirect();
     }
   };
 

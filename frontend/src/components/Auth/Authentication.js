@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default function Authentication() {
   const {
-    loginWithPopup,
+    loginWithPopup, 
     loginWithRedirect,
     logout,
     user,
