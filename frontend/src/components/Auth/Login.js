@@ -9,6 +9,7 @@ export default function Login() {
     loginWithRedirect,
     logout,
     isAuthenticated,
+    getAccessTokenSilently,
   } = useAuth0();
   // let navigate = useNavigate();
   const userData = JSON.stringify(user);
@@ -16,26 +17,48 @@ export default function Login() {
     await loginWithRedirect();
   };
   useEffect(() => {
-    if (isAuthenticated) {
-      sessionStorage.setItem("userInfo",userData);
-      const storedUserInfo = sessionStorage.getItem("userInfo");
-      console.log("Stored ",storedUserInfo)
-      axios
-        .post("/api/v1/user/new", {
-          userName: user.nickname,
-          name: user.name,
-          picture: user.picture,
-          email: user.email,
-        })
-        .then((response) => {
-          console.log("User Saved ", response.data);
-        }) 
-        .catch((error) => {
-          console.log("Error saving user", error);
-        });
+    sessionStorage.setItem("userInfo", userData);
+    const storedUserInfo = sessionStorage.getItem("userInfo");
+    console.log("Stored ", storedUserInfo);
+    // console.log("Stored ",user.country)
+  }, [user]);
+  useEffect(() => {
+    const saveUser = async () =>{
 
+      try {
+        if (isAuthenticated) {
+          const token = await getAccessTokenSilently();
+          axios
+            .post(
+              "/api/v1/user/new",
+              {
+                userName: user.nickname,
+                name: user.name,
+                picture: user.picture,
+                email: user.email,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`, // Pass token in the request
+                },
+              }
+            )
+            .then((response) => {
+              console.log("User Saved ", response.data);
+            })
+            .catch((error) => {
+              console.log("Error saving user", error);
+            });
+        }
+      } catch (error) {
+        console.error(
+          "Error in login:",
+          error.response ? error.response.data : error
+        );
+      }
     }
-  }, [isAuthenticated, user]);
+    saveUser();
+  }, [isAuthenticated]);
 
   return (
     <>

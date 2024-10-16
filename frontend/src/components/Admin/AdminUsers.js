@@ -6,14 +6,21 @@ import { getAllusers } from "../../actions/usersActions.js";
 import Loader from "../layouts/Loader";
 
 const AdminUsers = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated,getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.usersState);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(getAllusers);
-    }
+    const getUsers = async () =>{
+ 
+      if (isAuthenticated) {
+        const token = await getAccessTokenSilently();
+        console.log("User side token",token)
+        // dispatch(getAllusers);
+        dispatch(getAllusers(token));
+      }
+    };
+    getUsers();
   }, [isAuthenticated, dispatch]);
   return (
     <Fragment>

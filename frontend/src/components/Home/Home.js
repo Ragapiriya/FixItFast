@@ -6,7 +6,8 @@ import axios from "axios";
 import React, { Fragment, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 const ReservationForm = () => {
-  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+  const { user, isAuthenticated, loginWithRedirect, getAccessTokenSilently } =
+    useAuth0();
   const initialFormData = {
     vehicleType: "",
     vehicleRegistrationNo: "",
@@ -29,6 +30,9 @@ const ReservationForm = () => {
 
   const handleSubmit = async (e) => {
     if (isAuthenticated) {
+      const token = await getAccessTokenSilently();
+
+      console.log("home page token", token);
       e.preventDefault();
       let {
         vehicleRegistrationNo,
@@ -89,7 +93,12 @@ const ReservationForm = () => {
       try {
         const res = await axios.post(
           "http://localhost:8005/api/v1/reservation/new",
-          reservationData
+          reservationData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         console.log("Reservation submitted to db", res);
         setFormData(initialFormData);

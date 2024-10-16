@@ -5,20 +5,27 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { getAllreservations } from "../../actions/reservationsActions";
 import Loader from "../layouts/Loader";
 
-const AdminReservations = () => {
-  const { isAuthenticated } = useAuth0();
+const AdminReservations =  () => {
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const currentDateTime = new Date();
   const [upcomingResCount, setupcomingResCount] = useState(0);
   const dispatch = useDispatch();
   const { reservations, loading } = useSelector(
     (state) => state.reservationsState
   );
-
+ 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(getAllreservations);
-    }
-  }, [isAuthenticated, dispatch]);
+    const getReservation = async () => {
+      if (isAuthenticated) {
+        // dispatch(getAllreservations);
+        const token = await getAccessTokenSilently();
+        console.log(token);
+        // getAllreservations(dispatch, token);
+        dispatch(getAllreservations(token));
+      }
+    };
+    getReservation();
+  }, [isAuthenticated,getAccessTokenSilently, dispatch]);
   useEffect(() => {
     if (reservations && reservations.length > 0) {
       const count = reservations.filter((reservation) => {
@@ -29,7 +36,7 @@ const AdminReservations = () => {
     }
   }, [reservations]);
   return (
-    <Fragment> 
+    <Fragment>
       {loading ? (
         <Loader />
       ) : (

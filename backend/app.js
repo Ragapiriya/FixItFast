@@ -15,14 +15,13 @@ app.use(cors());
 //middleware- to verify token
 const jwtCheck = auth({
   audience: "FixItFast API",
-  issuerBaseURL: "https://dev-qro8hjwxug8ea45c.us.auth0.com/",
+  issuerBaseURL: "https://dev-qro8hjwxug8ea45c.us.auth0.com/",   //to retrieve public key
   tokenSigningAlg: "RS256",
 });
 
-
 //routes
-app.use("/api/v1", reservation);
-app.use("/api/v1", user);
+app.use("/api/v1",jwtCheck, reservation);
+app.use("/api/v1",jwtCheck, user);
 
 
 // app.get("/", (req, res) => {
@@ -51,7 +50,7 @@ app.use("/api/v1", user);
 //   } catch (error) {
 //     res.send(error.message);
 //   }
-// });
+// }); 
 
 // app.post("/api/user", async (req, res) => {
 //   const { userName, email, name, contactNumber,country, picture } = req.body;
@@ -99,6 +98,8 @@ app.use("/api/v1", user);
 //     user
 //   });
 // });
+
+
 
 
 

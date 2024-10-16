@@ -8,7 +8,7 @@ import Loader from "../layouts/Loader";
  
 const Reservations = () => {
   // const [reservations, setReservations] = useState([]);
-  const { user, isLoading, error, isAuthenticated } = useAuth0();
+  const { user, isLoading, error, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const currentDateTime = new Date();
   const dispatch = useDispatch();
   const { reservations, loading } = useSelector(
@@ -41,9 +41,17 @@ const Reservations = () => {
   //   }
   // },[isAuthenticated]);
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(getReservations);
-    }
+    const getReservation = async () =>{
+
+      if (isAuthenticated) {
+        const token =  await getAccessTokenSilently();
+        console.log(token)
+  
+        // dispatch(getReservations,token);
+        getReservations(dispatch,token,user.nickname)
+      }
+    };
+    getReservation();
   }, []);
 
   // const handleDelete = async (id) => {

@@ -12,7 +12,6 @@ root.render(
     <Provider store={store}>
       <Auth0Provider
         domain="dev-qro8hjwxug8ea45c.us.auth0.com" //My Auth0 tenant name.
-        // domain="auth.fixitfast.com"
         clientId="C82akf9epA77n5ZsDbLnNSdGXz0NaACu" //unique identifier for your application
         scope="openid profile email"
         authorizationParams={{
