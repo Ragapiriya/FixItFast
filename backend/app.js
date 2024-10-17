@@ -6,6 +6,9 @@ const user = require("./routes/users");
 const userModel = require("./models/userModel");
 const bodyParser = require("body-parser");
 const { auth } = require("express-oauth2-jwt-bearer");
+const dotenv = require('dotenv');
+const pathModule = require('path');
+dotenv.config({path:pathModule.join(__dirname,"config/config.env")});
 
 //middlewares
 app.use(express.json());

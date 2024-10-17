@@ -12,11 +12,11 @@ root.render(
     <Provider store={store}>
       <Auth0Provider
         domain="dev-qro8hjwxug8ea45c.us.auth0.com" //My Auth0 tenant name.
-        clientId="C82akf9epA77n5ZsDbLnNSdGXz0NaACu" //unique identifier for your application
+        clientId= {process.env.REACT_APP_OIDC_CLIENT_ID} //unique identifier for your application
         scope="openid profile email"
         authorizationParams={{
           redirect_uri: window.location.origin,
-          audience: "FixItFast API",
+          audience: process.env.REACT_APP_AUDIENCE,
         }}
       >
         <App />
