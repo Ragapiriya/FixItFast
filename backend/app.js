@@ -4,7 +4,7 @@ const app = express();
 const reservation = require("./routes/reservation");
 const user = require("./routes/users");
 const userModel = require("./models/userModel");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const { auth } = require("express-oauth2-jwt-bearer");
 
 //middlewares
@@ -14,20 +14,18 @@ app.use(cors());
 
 //middleware- to verify token
 const jwtCheck = auth({
-  audience: "FixItFast API",
-  issuerBaseURL: "https://dev-qro8hjwxug8ea45c.us.auth0.com/",   //to retrieve public key
-  tokenSigningAlg: "RS256",
+  audience: process.env.AUDIENCE,
+  issuerBaseURL: process.env.OIDC_ISSUER_BASE_URL, //to retrieve public key
+  tokenSigningAlg: process.env.ALGORITHM,
 });
 
 //routes
-app.use("/api/v1",jwtCheck, reservation);
-app.use("/api/v1",jwtCheck, user);
-
+app.use("/api/v1", jwtCheck, reservation);
+app.use("/api/v1", jwtCheck, user);
 
 // app.get("/", (req, res) => {
 //   res.send("Hello from index route");
 // });
-
 
 // //checking the jwt token before sending responses.
 // //only for authenticated user [has valid token]
@@ -50,7 +48,7 @@ app.use("/api/v1",jwtCheck, user);
 //   } catch (error) {
 //     res.send(error.message);
 //   }
-// }); 
+// });
 
 // app.post("/api/user", async (req, res) => {
 //   const { userName, email, name, contactNumber,country, picture } = req.body;
@@ -91,17 +89,13 @@ app.use("/api/v1",jwtCheck, user);
 //     });
 //   }
 //   //user doesn't exist
-  
+
 //   await user.save();
 //   res.status(201).json({
 //     message: "User data updated",
 //     user
 //   });
 // });
-
-
-
-
 
 //handling 404 error
 app.use((req, res, next) => {
