@@ -1,5 +1,5 @@
 import "./AdminUsers.css";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getAllusers } from "../../actions/usersActions.js";
@@ -21,7 +21,7 @@ const AdminUsers = () => {
       }
     };
     getUsers();
-  }, [isAuthenticated, dispatch]);
+  }, [isAuthenticated, dispatch,getAccessTokenSilently]);
   return (
     <Fragment>
       {loading ? (

@@ -7,13 +7,12 @@ import Loader from "../layouts/Loader";
 
 const AdminReservations =  () => {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const currentDateTime = new Date();
   const [upcomingResCount, setupcomingResCount] = useState(0);
   const dispatch = useDispatch();
   const { reservations, loading } = useSelector(
     (state) => state.reservationsState
   );
- 
+  
   useEffect(() => {
     const getReservation = async () => {
       if (isAuthenticated) {
@@ -27,6 +26,7 @@ const AdminReservations =  () => {
     getReservation();
   }, [isAuthenticated,getAccessTokenSilently, dispatch]);
   useEffect(() => {
+    const currentDateTime = new Date();
     if (reservations && reservations.length > 0) {
       const count = reservations.filter((reservation) => {
         const reservationDateTime = new Date(reservation.preferredDate);

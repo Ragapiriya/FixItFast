@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import "./Profile.css";
 import MetaData from "../MetaData";
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
 import "./Profile.css";
 
 const Profile = () => {

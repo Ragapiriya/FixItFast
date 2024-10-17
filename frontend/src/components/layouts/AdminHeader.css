@@ -1,0 +1,37 @@
+.btn {
+    display: block;
+    padding: 8px;
+    background-color: #294362;
+    float: left;
+    color: rgb(248, 245, 245);
+  
+  }
+  .btn:hover{
+      color:  #294362;
+  
+  }
+  .spc-btn {
+    display: block;
+    padding: 17px;
+    background-color: #294362;
+    float: left;
+    color: rgb(248, 245, 245);
+  }
+  .spc-btn:hover{
+      color:  #294362;
+  }
+  li button:hover {
+    background-color: #ffffff;
+  }
+  
+  li button {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  .nav-link{
+      color: whitesmoke;
+  }

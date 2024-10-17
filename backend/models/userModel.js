@@ -17,10 +17,7 @@ const userSchema = mongoose.Schema({
     unique: true,
     validate: [validator.isEmail, "Please enter valid email address"],
   },
-  role: {
-    type: String,
-    default: "user",
-  },
+  
   contactNumber: {
     type: Number
   },

@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { jwtDecode } from "jwt-decode";
 export default function Login() {
   const {
     user,
@@ -11,7 +11,6 @@ export default function Login() {
     isAuthenticated,
     getAccessTokenSilently,
   } = useAuth0();
-  // let navigate = useNavigate();
   const userData = JSON.stringify(user);
   const handleLogin = async () => {
     await loginWithRedirect();
@@ -20,14 +19,23 @@ export default function Login() {
     sessionStorage.setItem("userInfo", userData);
     const storedUserInfo = sessionStorage.getItem("userInfo");
     console.log("Stored ", storedUserInfo);
-    // console.log("Stored ",user.country)
-  }, [user]);
+  }, [user, userData]);
   useEffect(() => {
-    const saveUser = async () =>{
-
+    const saveUser = async () => {
       try {
         if (isAuthenticated) {
           const token = await getAccessTokenSilently();
+          const decodedToken = jwtDecode(token);
+
+          console.log("Token", token);
+          console.log("Decoded Token", decodedToken);
+          const roles = decodedToken["your_name_space/roles"];
+          console.log("roles: ", roles);
+          if (roles.includes("Admin")) {
+            console.log("Role is user");
+          } else {
+            console.log("Role is not user");
+          }
           axios
             .post(
               "/api/v1/user/new",
@@ -56,9 +64,9 @@ export default function Login() {
           error.response ? error.response.data : error
         );
       }
-    }
+    };
     saveUser();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, getAccessTokenSilently, user]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import "./Reservations.css";
 import MetaData from "../MetaData";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -8,7 +8,7 @@ import Loader from "../layouts/Loader";
  
 const Reservations = () => {
   // const [reservations, setReservations] = useState([]);
-  const { user, isLoading, error, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const currentDateTime = new Date();
   const dispatch = useDispatch();
   const { reservations, loading } = useSelector(
@@ -52,7 +52,7 @@ const Reservations = () => {
       }
     };
     getReservation();
-  }, []);
+  }, [getAccessTokenSilently,dispatch,isAuthenticated,user]);
 
   // const handleDelete = async (id) => {
   //   try {
