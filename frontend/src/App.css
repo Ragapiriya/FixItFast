@@ -9,7 +9,7 @@ body {
 }
 
 .required {
-  color: red; /* Set the color of the asterisk to red */
+  color: red;
 }
 .total-charges-table {
   display: table;
@@ -40,26 +40,26 @@ body {
 
 .col-12 {
   display: flex;
-  justify-content: center; /* Center the items horizontally */
-  align-items: center; /* Vertically center the items */
-  flex-wrap: wrap; /* Ensure it wraps on smaller screens */
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 ul {
   display: flex;
-  justify-content: space-between; /* Spacing between items */
-  list-style-type: none; /* Remove default list bullets */
+  justify-content: space-between;
+  list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
 li {
-  margin-right: 20px; /* Add space between list items */
-  flex-grow: 1; /* Distribute equal space between buttons */
+  margin-right: 20px;
+  flex-grow: 1;
 }
 
 button {
-  padding: 10px 20px; /* Adjust padding for buttons */
+  padding: 10px 20px;
   background-color: #f0f0f0;
   border: none;
   cursor: pointer;
@@ -68,7 +68,7 @@ button {
 }
 
 #login_btn {
-  background-color: #007bff; 
+  background-color: #007bff;
   color: white;
   border: none;
   cursor: pointer;
@@ -271,21 +271,4 @@ footer {
   border-left: 15px solid #fff;
   border-bottom: 20px solid #eeeeee;
   margin-right: -1px;
-}
-
-/* User Profile */
-
-.avatar-profile {
-  height: 16rem;
-  width: 16rem;
-}
-
-.user-info h4 {
-  font-weight: 800;
-  color: grey;
-  margin-top: 2rem;
-}
-
-.user-info p {
-  font-size: 1.1rem;
 }

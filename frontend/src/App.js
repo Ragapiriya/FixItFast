@@ -11,14 +11,33 @@ import "react-toastify/dist/ReactToastify.css";
 import "./customToast.css"; //
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import AdminHeader from "./components/layouts/AdminHeader";
-// import Authentication from "./components/Auth/Authentication";
+import { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { jwtDecode } from "jwt-decode";
+import NotFound from "./components/layouts/NotFound";
+
 function App() {
+  const [userRole, setUserRole] = useState(null);
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const getToken = async () => {
+        const token = await getAccessTokenSilently();
+        const decodedToken = jwtDecode(token);
+        const roles = decodedToken["your_name_space/roles"];
+        setUserRole(roles.includes("Admin") ? "Admin" : "User");
+        // console.log("Role", userRole);
+      };
+
+      getToken();
+    }
+  }, [isAuthenticated, userRole]);
   return (
     <Router>
       <div className="App">
         <HelmetProvider>
-          <Header/>
-          {/*  {userRole === "admin" ? <AdminHeader/> : <Header/>}   */}
+          {userRole && userRole === "Admin" ? <AdminHeader /> : <Header />}
           <ToastContainer position="top-center" theme="dark" />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -26,7 +45,13 @@ function App() {
             <Route path="/reservations" element={<Reservations />} />
 
             {/* admin routes */}
-            <Route path="/admin" element={<AdminDashboard />} />
+            <Route
+              path="/admin"
+              element={userRole === "Admin" ? <AdminDashboard /> : <NotFound />}
+            />
+
+            {/* 404 */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
         </HelmetProvider>

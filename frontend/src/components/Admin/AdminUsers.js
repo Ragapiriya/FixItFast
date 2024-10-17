@@ -6,22 +6,20 @@ import { getAllusers } from "../../actions/usersActions.js";
 import Loader from "../layouts/Loader";
 
 const AdminUsers = () => {
-  const { isAuthenticated,getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.usersState);
 
   useEffect(() => {
-    const getUsers = async () =>{
- 
+    const getUsers = async () => {
       if (isAuthenticated) {
         const token = await getAccessTokenSilently();
-        console.log("User side token",token)
-        // dispatch(getAllusers);
+        console.log("User side token", token);
         dispatch(getAllusers(token));
       }
     };
     getUsers();
-  }, [isAuthenticated, dispatch,getAccessTokenSilently]);
+  }, [isAuthenticated, dispatch, getAccessTokenSilently]);
   return (
     <Fragment>
       {loading ? (
@@ -38,27 +36,17 @@ const AdminUsers = () => {
                 <th>Created at</th>
               </tr>
             </thead>
-            {/* <tbody>
-                    {users.map((user) => (
-                        <tr key={user._id}>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.contactNumber}</td>
-                            <td>{user.country}</td>
-                            <td>{new Date(user.registrationDate).toLocaleDateString()}</td>
-                        </tr>
-                    ))}
-                </tbody> */}
-            <tbody>
-              {users && users.map((user)=>(
 
-              <tr key={user._id}>
-                <td>{user.userName}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.createdAt}</td>
-              </tr>
-              ))}
+            <tbody>
+              {users &&
+                users.map((user) => (
+                  <tr key={user._id}>
+                    <td>{user.userName}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.createdAt}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

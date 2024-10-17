@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Login from "../Auth/Login";
-import './Header.css';
+import "./Header.css";
 export default function Header() {
   return (
     <nav className="navbar row">
-      {/* logo */}
       <div className="col-12 col-md-3">
         <div className="navbar-brand">
           <img alt="FixItFast Logo" width="150px" src="./images/logo.png" />
@@ -17,7 +16,7 @@ export default function Header() {
           <li className="nav-item">
             <button className="btn">
               <Link to="/" className="nav-link">
-                Home 
+                Home
               </Link>
             </button>
           </li>

@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Login from "../Auth/Login";
-import './Header.css';
+import "./Header.css";
 export default function AdminHeader() {
   return (
     <nav className="navbar row">
-      {/* logo */}
       <div className="col-12 col-md-3">
         <div className="navbar-brand">
           <img alt="FixItFast Logo" width="150px" src="./images/logo.png" />
@@ -17,17 +16,24 @@ export default function AdminHeader() {
           <li className="nav-item">
             <button className="btn">
               <Link to="/admin" className="nav-link">
-                Dashboard 
+                Dashboard
               </Link>
             </button>
           </li>
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <button className="btn">
-              <Link to="/reservations" className="nav-link">
-                Reservations
+              <Link to="/" className="nav-link">
+                Book a reservation
               </Link>
             </button>
-          </li> */}
+          </li>
+          <li className="nav-item">
+            <button className="btn">
+              <Link to="/reservations" className="nav-link">
+                Your Reservations
+              </Link>
+            </button>
+          </li>
           <Login />
         </ul>
       </div>

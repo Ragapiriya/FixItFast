@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const usersSlice = createSlice({
   name: "users",
   initialState: {
-      users:[],
+    users: [],
     loading: false,
   },
   reducers: {
@@ -15,7 +15,7 @@ const usersSlice = createSlice({
     usersSuccess(state, action) {
       return {
         loading: false,
-        users: action.payload.users
+        users: action.payload.users,
       };
     },
     usersFail(state, action) {
@@ -29,7 +29,6 @@ const usersSlice = createSlice({
 
 const { actions, reducer } = usersSlice;
 
-export const { usersRequest, usersSuccess, usersFail } =
-  actions;
+export const { usersRequest, usersSuccess, usersFail } = actions;
 
-  export default reducer;
+export default reducer;

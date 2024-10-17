@@ -5,7 +5,7 @@ import usersReducer from "./slices/usersSlice";
 
 const reducer = combineReducers({
   reservationsState: reservationsReducer,
-  usersState:usersReducer
+  usersState: usersReducer,
 });
 const store = configureStore({
   reducer,

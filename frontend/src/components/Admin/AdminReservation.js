@@ -5,14 +5,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { getAllreservations } from "../../actions/reservationsActions";
 import Loader from "../layouts/Loader";
 
-const AdminReservations =  () => {
+const AdminReservations = () => {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [upcomingResCount, setupcomingResCount] = useState(0);
   const dispatch = useDispatch();
   const { reservations, loading } = useSelector(
     (state) => state.reservationsState
   );
-  
+
   useEffect(() => {
     const getReservation = async () => {
       if (isAuthenticated) {
@@ -24,7 +24,7 @@ const AdminReservations =  () => {
       }
     };
     getReservation();
-  }, [isAuthenticated,getAccessTokenSilently, dispatch]);
+  }, [isAuthenticated, getAccessTokenSilently, dispatch]);
   useEffect(() => {
     const currentDateTime = new Date();
     if (reservations && reservations.length > 0) {

@@ -1,96 +1,54 @@
-
-
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #eef2f3; /* Light background color for contrast */
-  }
-  
+  font-family: "Arial", sans-serif;
+  background-color: #eef2f3;
+}
+
+.profile-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 50px auto;
+  border: 1px solid #e4e4e4;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  transition: transform 0.2s;
+}
+
+.profile-container:hover {
+  transform: scale(1.009);
+}
+
+.profile-heading {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+}
+.profile-img {
+  width: 30%;
+  border-radius: 53px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.profile-detail {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #555;
+}
+
+@media (max-width: 600px) {
   .profile-container {
-    padding: 20px;
-    max-width: 600px;
-    margin: 50px auto; /* Added margin for spacing from top */
-    border: 1px solid #e4e4e4;
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff; /* White background for the profile card */
-    transition: transform 0.2s; /* Smooth hover effect */
+    padding: 15px;
   }
-  
-  .profile-container:hover {
-    transform: scale(1.009); /* Slightly enlarge on hover */
-  }
-  
+
   .profile-heading {
-    font-size: 28px; /* Increased heading size */
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333; /* Darker text color for contrast */
-    font-weight: bold;
-    text-align: center;
+    font-size: 24px;
   }
-  .profile-img{
-    width: 30%;
-    border-radius: 53px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 
-  }
   .profile-detail {
-    margin-bottom: 15px;
-    font-size: 18px;
-    color: #555; /* Softer color for the details */
+    font-size: 16px;
   }
-  
- 
-  @media (max-width: 600px) {
-    .profile-container {
-      padding: 15px; /* Adjust padding for smaller screens */
-    }
-  
-    .profile-heading {
-      font-size: 24px; /* Decrease heading size on smaller screens */
-    }
-  
-    .profile-detail {
-      font-size: 16px; /* Decrease detail size */
-    }
-  
-    .edit-button {
-      font-size: 14px; /* Smaller button text */
-    }
-  }
-  .popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(131, 147, 185);
-    padding: 60px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    width: 500px;
-
-
-  }
-  
-  .popup input {
-    display: block;
-    margin-bottom: 10px;
-    padding: 8px;
-    width: 100%;
-  }
-  
-  .popup button {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  .popup h3{
-    color: #000103;
-
-  }
-
- 
+}

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const reservationsSlice = createSlice({
   name: "reservations",
   initialState: {
-      reservations:[],
+    reservations: [],
     loading: false,
   },
   reducers: {
@@ -16,7 +16,7 @@ const reservationsSlice = createSlice({
       return {
         loading: false,
         reservations: action.payload.reservations,
-        length: action.payload.reservations.length
+        length: action.payload.reservations.length,
       };
     },
     reservationsFail(state, action) {
@@ -33,4 +33,4 @@ const { actions, reducer } = reservationsSlice;
 export const { reservationsRequest, reservationsSuccess, reservationsFail } =
   actions;
 
-  export default reducer;
+export default reducer;

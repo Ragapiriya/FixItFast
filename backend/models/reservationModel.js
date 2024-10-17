@@ -8,7 +8,7 @@ const reservationSchema = mongoose.Schema({
     required: true,
   },
   booking_id: {
-    type:Number
+    type: Number,
   },
 
   preferredDate: {
@@ -80,7 +80,6 @@ const reservationSchema = mongoose.Schema({
   },
 
   checksum: { type: String, required: true },
-  
 });
 reservationSchema.plugin(autoIncrement, { inc_field: "booking_id" });
 const reservationModel = mongoose.model("Reservation", reservationSchema);
