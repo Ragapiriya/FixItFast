@@ -17,13 +17,14 @@ export default function Login() {
   useEffect(() => {
     sessionStorage.setItem("userInfo", userData);
     const storedUserInfo = sessionStorage.getItem("userInfo");
-    // console.log("Stored ", storedUserInfo);
+    // console.log("Stored ", user);
   }, [user, userData]);
 
   useEffect(() => {
     const saveUser = async () => {
       try {
         if (isAuthenticated) {
+          
           const token = await getAccessTokenSilently();
           axios
             .post(

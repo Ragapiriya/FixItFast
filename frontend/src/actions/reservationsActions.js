@@ -37,3 +37,26 @@ export const getAllreservations = (token) => {
     }
   };
 };
+
+
+// export const deleteReservation = async (dispatch, token, reservationId) => {
+//   try {
+//     const config = {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     };
+    
+//     const { data } = await axios.delete(`/api/reservations/${reservationId}`, config);
+
+//     dispatch({
+//       type: DELETE_RESERVATION_SUCCESS,
+//       payload: reservationId,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: DELETE_RESERVATION_FAIL,
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
