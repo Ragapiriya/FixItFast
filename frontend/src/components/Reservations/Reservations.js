@@ -3,8 +3,12 @@ import "./Reservations.css";
 import MetaData from "../MetaData";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
-import { getReservations } from "../../actions/reservationsActions";
+import {
+  deleteReservation,
+  getReservations,
+} from "../../actions/reservationsActions";
 import Loader from "../layouts/Loader";
+import { toast } from "react-toastify";
 
 const Reservations = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -18,7 +22,7 @@ const Reservations = () => {
     const getReservation = async () => {
       if (isAuthenticated) {
         const token = await getAccessTokenSilently();
-        // console.log(token);
+        console.log(token);
         getReservations(dispatch, token, user.nickname);
       }
     };
@@ -56,7 +60,20 @@ const Reservations = () => {
 
     return dateTimeB - dateTimeA; // Descending order
   });
-  
+  const handleDelete = async (reservationId) => {
+    try {
+      const token = await getAccessTokenSilently();
+      deleteReservation(dispatch, token, reservationId, user.nickname);
+      toast.success("Deleted!", {
+        position: "top-center",
+      });
+    } catch (error) {
+      // console.error("Error deleting reservation:", error);
+      toast.error("Failed to delete!", {
+        position: "top-center",
+      });
+    }
+  };
 
   return (
     <Fragment>
@@ -107,11 +124,17 @@ const Reservations = () => {
                   </p> */}
                         </div>
                         {isUpcoming ? (
-                          <button className="cancel-button">
+                          <button
+                            className="cancel-button"
+                            onClick={() => handleDelete(reservation._id)}
+                          >
                             Cancel Reservation
                           </button>
                         ) : (
-                          <button className="remove-history-button">
+                          <button
+                            className="remove-history-button"
+                            onClick={() => handleDelete(reservation._id)}
+                          >
                             Remove History
                           </button>
                         )}

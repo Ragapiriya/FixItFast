@@ -8,7 +8,7 @@ import Profile from "./components/Profile/Profile";
 import Reservations from "./components/Reservations/Reservations";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./customToast.css"; //
+import "./customToast.css"; 
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import AdminHeader from "./components/layouts/AdminHeader";
 import { useEffect, useState } from "react";

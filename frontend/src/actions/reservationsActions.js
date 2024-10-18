@@ -1,5 +1,8 @@
 import axios from "axios";
 import {
+  deleteReservationFail,
+  deleteReservationRequest,
+  deleteReservationSuccess,
   reservationsFail,
   reservationsRequest,
   reservationsSuccess,
@@ -38,25 +41,19 @@ export const getAllreservations = (token) => {
   };
 };
 
+export const deleteReservation = async (dispatch, token, reservationId,userName) => {
+  try {
+    dispatch(deleteReservationRequest());
 
-// export const deleteReservation = async (dispatch, token, reservationId) => {
-//   try {
-//     const config = {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     };
-    
-//     const { data } = await axios.delete(`/api/reservations/${reservationId}`, config);
+    const { data } = await axios.delete(`/api/v1/reservation/${reservationId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-//     dispatch({
-//       type: DELETE_RESERVATION_SUCCESS,
-//       payload: reservationId,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: DELETE_RESERVATION_FAIL,
-//       payload: error.response.data.message,
-//     });
-//   }
-// };
+    dispatch(deleteReservationSuccess());
+    getReservations(dispatch,token,userName)
+  } catch (error) {
+    dispatch(deleteReservationFail(error.response.data.message))
+  }
+};

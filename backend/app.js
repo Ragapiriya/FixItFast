@@ -2,6 +2,7 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 const reservation = require("./routes/reservation");
+const reservationn = require("./routes/reservationn");
 const user = require("./routes/users");
 const userModel = require("./models/userModel");
 const bodyParser = require("body-parser");
@@ -24,6 +25,8 @@ const jwtCheck = auth({
 
 //routes
 app.use("/api/v1", jwtCheck, reservation);
+app.use("/api/v1", reservationn);
+
 app.use("/api/v1", jwtCheck, user);
 
 // app.get("/", (req, res) => {

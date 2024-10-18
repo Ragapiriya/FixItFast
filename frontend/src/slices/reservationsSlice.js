@@ -25,12 +25,45 @@ const reservationsSlice = createSlice({
         error: action.payload,
       };
     },
+    deleteReservationRequest(state, action) {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    deleteReservationSuccess(state, action) {
+      return {
+        ...state,
+        loading: false,
+        isProductDeleted: true,
+      };
+    },
+    deleteReservationFail(state, action) {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    },
+    clearReservationDeleted(state, action) {
+      return {
+        ...state,
+        isProductDeleted: false,
+      };
+    },
   },
 });
 
 const { actions, reducer } = reservationsSlice;
 
-export const { reservationsRequest, reservationsSuccess, reservationsFail } =
-  actions;
+export const {
+  reservationsRequest,
+  reservationsSuccess,
+  reservationsFail,
+  deleteReservationRequest,
+  deleteReservationSuccess,
+  deleteReservationFail,
+  clearReservationDeleted,
+} = actions;
 
 export default reducer;
