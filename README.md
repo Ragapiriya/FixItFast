@@ -6,6 +6,9 @@ For authentication, FixItFast integrates Auth0, enabling secure user logins and 
 By combining modern web technologies, secure authentication, and strong security measures, FixItFast delivers a reliable and user-friendly vehicle service reservation platform for both users and administrators.</p>
 
 ![image](https://github.com/user-attachments/assets/d80e69ab-f193-431a-889f-93818ec8e1cd)
+Home page👇</br>
+![image](https://github.com/user-attachments/assets/22641fc2-62f0-4087-9b2d-2cf4ba496e5c)
+
 
 <h3> For further reference, please don't hesitate to have a look at my latest Medium blog articles ✍</h3>
 <p>Article 01 📝 </p>
@@ -19,6 +22,7 @@ By combining modern web technologies, secure authentication, and strong security
 ✔ Implementation of Login and Logout flow using OIDC protocol. </br>
 ✔ Implementation of Validating and using access tokens to perform the functionalities of the application (view, insert, and delete their entries) </br>
 ✔ Security aspects considered, authentication protocols </br>
+✔ FixItFast App Walkthrough: A Visual Guide </br>
 ✔ Learning outcomes</br>
 
 
