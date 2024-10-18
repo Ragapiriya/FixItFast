@@ -7,9 +7,21 @@ By combining modern web technologies, secure authentication, and strong security
 
 ![image](https://github.com/user-attachments/assets/d80e69ab-f193-431a-889f-93818ec8e1cd)
 
-<h3>📝 For further reference, please don't hesitate to have a look at my Medium blog article ✍</h3>
-........ 🔗link comes here
- <p> You can refer </p>
-  ✔ hehe </br>
-  ✔ hehe
+<h3> For further reference, please don't hesitate to have a look at my latest Medium blog articles ✍</h3>
+<p>Article 01 📝 </p>
+<p>🔗 https://medium.com/@r2001piriya/securing-your-mern-application-a-comprehensive-guide-to-auth0-and-role-based-access-control-2c6487f125b8 </p>
+<p>It is about the essential aspects of implementing authentication and authorization in web applications, focusing on the powerful capabilities of Auth0. Drawing from my recent experience with my web application, FixItFast, I will guide you through the process of integrating Auth0 to secure your MERN stack application.</p>
+<p>Article 02 📝</p>
+<p>🔗 https://medium.com/@r2001piriya/fortifying-your-mern-application-implementing-owasp-top-10-vulnerability-mitigation-and-oidc-675572980be6</p>
+<p>In this article, we can explore 🔍 the following key topics:</p>
+
+✔ Implementation strategies </br>
+✔ Implementation of Login and Logout flow using OIDC protocol. </br>
+✔ Implementation of Validating and using access tokens to perform the functionalities of the application (view, insert, and delete their entries) </br>
+✔ Security aspects considered, authentication protocols </br>
+✔ Learning outcomes</br>
+
+
+
+ 
 
